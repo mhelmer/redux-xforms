@@ -1,0 +1,2351 @@
+[
+  {
+    "__docId__": 0,
+    "kind": "file",
+    "name": "src/createByKey.js",
+    "content": "import { compose } from 'redux'\n\nimport isolateSlice from './isolateSlice'\nimport updateSlice from './updateSlice'\nimport withFilter from './withFilter'\nimport withInitialState from './withInitialState'\n\n/**\n * Creates a reducer transformer that adds byKey-filtering.\n *\n * @example\n * const byKeyReducer = createByKey(\n *   action => action.hasOwnProperty('userId'),\n *   action => action.userId\n * )(reducer)\n *\n * // returns {\n * //   2: { username: 'mrXform' },\n * //   3: reducer({ username: 'otherUser' }, action),\n * // }\n * byKeyReducer({\n *   { 2: { username: 'mrXform' } },\n *   { 3: { username: 'otherUser' } },\n * }, { userId: 3 })\n *\n * @param {function(action: Object): bool} predicate The predicate to use\n * @param {function(action: Object): string} mapActionToKey Map action to the key of the selected slice.\n * @returns {function} A reducer transformer\n */\nfunction createByKey(predicate, mapActionToKey) {\n  return compose(\n    withInitialState({}),\n    withFilter(predicate),\n    updateSlice(mapActionToKey),\n    isolateSlice(mapActionToKey)\n  )\n}\n\nexport default createByKey\n\nconst defaultSelector = state => state\n\n/**\n * Creates a selector transformer with byKey-filtering.\n *\n * @example\n * const getContainsId = (state, { id }) => state.ids.indexOf(id) !== -1\n * const getContainsIdByKind = createGetByKey(({ kind }) => kind)(getContainsId)\n * // returns true\n * getContainsIdByKind(\n *   { 'approved': { ids: [1, 2, 3] } },\n *   { kind: 'approved', id: 2 }\n * )\n *\n * @param {function(action: Object): string} mapFilterToKey Map filter to the key of the selected slice.\n * @returns {function} A selector transformer\n */\nexport function createGetByKey(mapFilterToKey) {\n  return (selector = defaultSelector) => isolateSlice(mapFilterToKey)(selector)\n}\n",
+    "static": true,
+    "longname": "src/createByKey.js",
+    "access": null,
+    "description": null,
+    "lineNumber": 1
+  },
+  {
+    "__docId__": 1,
+    "kind": "function",
+    "name": "defaultSelector",
+    "memberof": "src/createByKey.js",
+    "generator": false,
+    "async": false,
+    "static": true,
+    "longname": "src/createByKey.js~defaultSelector",
+    "access": null,
+    "export": false,
+    "importPath": "redux-xforms/createByKey.js",
+    "importStyle": null,
+    "description": null,
+    "lineNumber": 41,
+    "undocument": true,
+    "unknown": [
+      {
+        "tagName": "@_undocument",
+        "tagValue": ""
+      }
+    ],
+    "params": [
+      {
+        "name": "state",
+        "types": [
+          "*"
+        ]
+      }
+    ]
+  },
+  {
+    "__docId__": 2,
+    "kind": "function",
+    "name": "createGetByKey",
+    "memberof": "src/createByKey.js",
+    "generator": false,
+    "async": false,
+    "static": true,
+    "longname": "src/createByKey.js~createGetByKey",
+    "access": null,
+    "export": true,
+    "importPath": "redux-xforms/createByKey.js",
+    "importStyle": "{createGetByKey}",
+    "description": "Creates a selector transformer with byKey-filtering.",
+    "examples": [
+      "const getContainsId = (state, { id }) => state.ids.indexOf(id) !== -1\nconst getContainsIdByKind = createGetByKey(({ kind }) => kind)(getContainsId)\n// returns true\ngetContainsIdByKind(\n  { 'approved': { ids: [1, 2, 3] } },\n  { kind: 'approved', id: 2 }\n)"
+    ],
+    "lineNumber": 58,
+    "unknown": [
+      {
+        "tagName": "@returns",
+        "tagValue": "{function} A selector transformer"
+      }
+    ],
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "function(action: Object): string"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "mapFilterToKey",
+        "description": "Map filter to the key of the selected slice."
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "function"
+      ],
+      "spread": false,
+      "description": "A selector transformer"
+    }
+  },
+  {
+    "__docId__": 3,
+    "kind": "function",
+    "name": "createByKey",
+    "memberof": "src/createByKey.js",
+    "generator": false,
+    "async": false,
+    "static": true,
+    "longname": "src/createByKey.js~createByKey",
+    "access": null,
+    "export": true,
+    "importPath": "redux-xforms/createByKey.js",
+    "importStyle": "createByKey",
+    "description": "Creates a reducer transformer that adds byKey-filtering.",
+    "examples": [
+      "const byKeyReducer = createByKey(\n  action => action.hasOwnProperty('userId'),\n  action => action.userId\n)(reducer)\n\n// returns {\n//   2: { username: 'mrXform' },\n//   3: reducer({ username: 'otherUser' }, action),\n// }\nbyKeyReducer({\n  { 2: { username: 'mrXform' } },\n  { 3: { username: 'otherUser' } },\n}, { userId: 3 })"
+    ],
+    "lineNumber": 30,
+    "unknown": [
+      {
+        "tagName": "@returns",
+        "tagValue": "{function} A reducer transformer"
+      }
+    ],
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "function(action: Object): bool"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "predicate",
+        "description": "The predicate to use"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "function(action: Object): string"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "mapActionToKey",
+        "description": "Map action to the key of the selected slice."
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "function"
+      ],
+      "spread": false,
+      "description": "A reducer transformer"
+    }
+  },
+  {
+    "__docId__": 4,
+    "kind": "file",
+    "name": "src/createByKey.spec.js",
+    "content": "import { createByKey, createGetByKey } from './'\n\ndescribe('createByKey', () => {\n  it('should work as in the example', () => {\n    const getContainsId = (state, { id }) => state.ids.indexOf(id) !== -1\n    const getContainsIdByKind = createGetByKey(({ kind }) => kind)(getContainsId)\n    const state = getContainsIdByKind(\n      { 'approved': { ids: [1, 2, 3] } },\n      { kind: 'approved', id: 2 }\n    )\n    expect(state).toBe(true)\n  })\n\n  const ACTION_TYPE = 'ACTION_TYPE'\n  const reducer = (state = null, action) => action.type === ACTION_TYPE ? action.payload\n    : state\n  describe('simple reducer', () => {\n    const mapInputToKey = input => input.filterKey\n    const byKeyReducer = createByKey(\n      action => action.hasOwnProperty('filterKey'),\n      mapInputToKey\n    )(reducer)\n    const selector = createGetByKey(mapInputToKey)()\n\n    it('should have initial global state', () => {\n      const state = byKeyReducer(undefined, {})\n      expect(state).toEqual({})\n    })\n    it('should create a simple byKey reducer', () => {\n      const state = [ {}, {\n        type: ACTION_TYPE,\n        filterKey: 4,\n        payload: 'some-payload',\n      } ].reduce(byKeyReducer, undefined)\n      expect(selector(state, { filterKey: 4 })).toBe('some-payload')\n    })\n  })\n})\n",
+    "static": true,
+    "longname": "src/createByKey.spec.js",
+    "access": null,
+    "description": null,
+    "lineNumber": 1
+  },
+  {
+    "__docId__": 5,
+    "kind": "file",
+    "name": "src/createReducersByKey.js",
+    "content": "import { compose } from 'redux'\nimport { into, map } from 'transducers.js'\n\nimport createByKey from './createByKey'\nimport withInitialState from './withInitialState'\n\nconst initializeReducer = ([ key, reducer ]) => [ key, reducer(undefined, {}) ]\nconst combineInitialStates = obj => into({}, map(initializeReducer), obj)\n\nconst mapActionToReducer = mapActionToKey => reducers => (state, action) => {\n  return reducers[mapActionToKey(action)](state, action)\n}\n\n/**\n * Transforms an object with reducers to a combined reducer with\n * byKey-filtering.\n *\n * @example\n * const enhanceReducers = createReducersByKey(\n *   action => action.hasOwnProperty('filterName'),\n *   action => action.filterName\n * )\n * const byFilterNameReducer = enhanceReducers({\n *   FILTER_ONE: reducer,\n *   FILTER_TWO: reducer,\n * })\n *\n * // returns {\n * //   reducer({ username: 'mrXform' }, action),\n * //   FILTER_TWO: { username: 'otherUser' },\n * // }\n * byFilterNameReducer({\n *   FILTER_ONE: { username: 'mrXform' },\n *   FILTER_TWO: { username: 'otherUser' },\n * }, {\n *   type: 'SUCCESS',\n *   filterName: 'FILTER_ONE',\n *   payload: { username: 'nextUserName' },\n * })\n *\n * @param {function(action: Object): bool} predicate The predicate to use\n * @param {function(action: Object): string} mapActionToKey Map action to the key of the selected slice.\n * @returns {function} A reducer transformer\n */\nfunction createReducersByKey(predicate, mapActionToKey)  {\n  return reducers => {\n    const initialState = combineInitialStates(reducers)\n    const reducerPredicate = action => predicate(action) && reducers.hasOwnProperty(mapActionToKey(action))\n\n    return compose(\n      withInitialState(initialState),\n      createByKey(reducerPredicate, mapActionToKey),\n      mapActionToReducer(mapActionToKey)\n    )(reducers)\n  }\n}\n\nexport default createReducersByKey\n",
+    "static": true,
+    "longname": "src/createReducersByKey.js",
+    "access": null,
+    "description": null,
+    "lineNumber": 1
+  },
+  {
+    "__docId__": 6,
+    "kind": "function",
+    "name": "initializeReducer",
+    "memberof": "src/createReducersByKey.js",
+    "generator": false,
+    "async": false,
+    "static": true,
+    "longname": "src/createReducersByKey.js~initializeReducer",
+    "access": null,
+    "export": false,
+    "importPath": "redux-xforms/createReducersByKey.js",
+    "importStyle": null,
+    "description": null,
+    "lineNumber": 7,
+    "undocument": true,
+    "unknown": [
+      {
+        "tagName": "@_undocument",
+        "tagValue": ""
+      }
+    ],
+    "params": [
+      {
+        "name": "arrayPattern",
+        "types": [
+          "*[]"
+        ],
+        "defaultRaw": [
+          "null",
+          "null"
+        ],
+        "defaultValue": "[null, null]"
+      }
+    ]
+  },
+  {
+    "__docId__": 7,
+    "kind": "function",
+    "name": "combineInitialStates",
+    "memberof": "src/createReducersByKey.js",
+    "generator": false,
+    "async": false,
+    "static": true,
+    "longname": "src/createReducersByKey.js~combineInitialStates",
+    "access": null,
+    "export": false,
+    "importPath": "redux-xforms/createReducersByKey.js",
+    "importStyle": null,
+    "description": null,
+    "lineNumber": 8,
+    "undocument": true,
+    "unknown": [
+      {
+        "tagName": "@_undocument",
+        "tagValue": ""
+      }
+    ],
+    "params": [
+      {
+        "name": "obj",
+        "types": [
+          "*"
+        ]
+      }
+    ]
+  },
+  {
+    "__docId__": 8,
+    "kind": "function",
+    "name": "mapActionToReducer",
+    "memberof": "src/createReducersByKey.js",
+    "generator": false,
+    "async": false,
+    "static": true,
+    "longname": "src/createReducersByKey.js~mapActionToReducer",
+    "access": null,
+    "export": false,
+    "importPath": "redux-xforms/createReducersByKey.js",
+    "importStyle": null,
+    "description": null,
+    "lineNumber": 10,
+    "undocument": true,
+    "unknown": [
+      {
+        "tagName": "@_undocument",
+        "tagValue": ""
+      }
+    ],
+    "params": [
+      {
+        "name": "mapActionToKey",
+        "types": [
+          "*"
+        ]
+      }
+    ]
+  },
+  {
+    "__docId__": 9,
+    "kind": "function",
+    "name": "createReducersByKey",
+    "memberof": "src/createReducersByKey.js",
+    "generator": false,
+    "async": false,
+    "static": true,
+    "longname": "src/createReducersByKey.js~createReducersByKey",
+    "access": null,
+    "export": true,
+    "importPath": "redux-xforms/createReducersByKey.js",
+    "importStyle": "createReducersByKey",
+    "description": "Transforms an object with reducers to a combined reducer with\nbyKey-filtering.",
+    "examples": [
+      "const enhanceReducers = createReducersByKey(\n  action => action.hasOwnProperty('filterName'),\n  action => action.filterName\n)\nconst byFilterNameReducer = enhanceReducers({\n  FILTER_ONE: reducer,\n  FILTER_TWO: reducer,\n})\n\n// returns {\n//   reducer({ username: 'mrXform' }, action),\n//   FILTER_TWO: { username: 'otherUser' },\n// }\nbyFilterNameReducer({\n  FILTER_ONE: { username: 'mrXform' },\n  FILTER_TWO: { username: 'otherUser' },\n}, {\n  type: 'SUCCESS',\n  filterName: 'FILTER_ONE',\n  payload: { username: 'nextUserName' },\n})"
+    ],
+    "lineNumber": 45,
+    "unknown": [
+      {
+        "tagName": "@returns",
+        "tagValue": "{function} A reducer transformer"
+      }
+    ],
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "function(action: Object): bool"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "predicate",
+        "description": "The predicate to use"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "function(action: Object): string"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "mapActionToKey",
+        "description": "Map action to the key of the selected slice."
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "function"
+      ],
+      "spread": false,
+      "description": "A reducer transformer"
+    }
+  },
+  {
+    "__docId__": 10,
+    "kind": "file",
+    "name": "src/createReducersByKey.spec.js",
+    "content": "import { createReducersByKey, createGetByKey } from './'\n\ndescribe('Higher order reducers for filters', () => {\n  describe('example', () => {\n    const reducer = (state = null, action) => action.type === 'SUCCESS' ? action.payload : state\n    const enhanceReducers = createReducersByKey(\n      action => action.hasOwnProperty('filterName'),\n      action => action.filterName\n    )\n    const byFilterNameReducer = enhanceReducers({\n      FILTER_ONE: reducer,\n      FILTER_TWO: reducer,\n    })\n\n    const state = byFilterNameReducer({\n      FILTER_ONE: { username: 'mrXform' },\n      FILTER_TWO: { username: 'otherUser' },\n    }, {\n      type: 'SUCCESS',\n      filterName: 'FILTER_ONE',\n      payload: { username: 'nextUserName' },\n    })\n    expect(state).toEqual({\n     FILTER_ONE: { username: 'nextUserName' },\n     FILTER_TWO: { username: 'otherUser' },\n    })\n  })\n  describe('simple reducer', () => {\n    const reducer = (state = null, action) => action.type === 'FETCH_FILTER_SUCCESS' ? action.payload\n      : state\n    describe('createReducersByFilterName', () => {\n\n      const mapActionToKey = action => action.filterName\n      const filterPredicate = filterReducers => action => action.hasOwnProperty('filterName')\n      const getByFilter = createGetByKey(({ filterName }) => filterName)(state => state)\n\n      it('should have initial state', () => {\n        const filterReducers = { FILTER_ONE: reducer }\n        const createReducersByFilterName = createReducersByKey(\n          filterPredicate(filterReducers),\n          mapActionToKey\n        )\n        const filtereReducer = createReducersByFilterName(filterReducers)\n\n        const state = [ {} ].reduce(filtereReducer, undefined)\n        expect(getByFilter(state, { filterName: 'FILTER_ONE' })).toBe(null)\n      })\n      it('should handle a single filter', () => {\n        const FILTER_ONE = 'FILTER_ONE'\n        const filterReducers = { [FILTER_ONE]: reducer }\n        const createReducersByFilterName = createReducersByKey(\n          filterPredicate(filterReducers),\n          mapActionToKey\n        )\n        const filterReducer = createReducersByFilterName(filterReducers)\n\n        const state = [ {}, {\n          type: 'FETCH_FILTER_SUCCESS',\n          filterName: FILTER_ONE,\n          payload: 'some-payload',\n        } ].reduce(filterReducer, undefined)\n        expect(getByFilter(state, { filterName: FILTER_ONE })).toBe('some-payload')\n      })\n\n      const fetchSuccess = (filterName, payload) => ({\n        type: 'FETCH_FILTER_SUCCESS',\n        filterName,\n        payload,\n      })\n      it('should handle two filters and initial state', () => {\n        const FILTER_ONE = 'FILTER_ONE'\n        const FILTER_TWO = 'FILTER_TWO'\n        const filterReducers = {\n          [FILTER_ONE]: reducer,\n          [FILTER_TWO]: reducer,\n        }\n        const createReducersByFilterName = createReducersByKey(\n          filterPredicate(filterReducers),\n          mapActionToKey\n        )\n        const filterReducer = createReducersByFilterName(filterReducers)\n\n        const state = [ {},\n          fetchSuccess(FILTER_ONE, 'some-payload'),\n        ].reduce(filterReducer, undefined)\n\n        expect(getByFilter(state, { filterName: FILTER_ONE })).toBe('some-payload')\n        expect(getByFilter(state, { filterName: FILTER_TWO })).toBe(null)\n      })\n    })\n    describe('different mapActionToKey', () => {\n      it('should handle a different different mapActionToKey', () => {\n        const FILTER_ONE = 'FILTER_ONE'\n        const filterReducers = { [FILTER_ONE]: reducer }\n\n        const mapActionToKey = action => action.sliceName\n        const filterPredicate = filterReducers => action => action.hasOwnProperty('sliceName')\n\n        const getByFilter = createGetByKey(({ sliceName }) => sliceName)(state => state)\n\n        const createReducersByFilterName = createReducersByKey(\n          filterPredicate(filterReducers),\n          mapActionToKey\n        )\n        const filterReducer = createReducersByFilterName(filterReducers)\n\n        const state = [ {}, {\n          type: 'FETCH_FILTER_SUCCESS',\n          sliceName: FILTER_ONE,\n          payload: 'some-payload',\n        } ].reduce(filterReducer, undefined)\n        expect(getByFilter(state, { sliceName: FILTER_ONE })).toBe('some-payload')\n      })\n    })\n  })\n})\n",
+    "static": true,
+    "longname": "src/createReducersByKey.spec.js",
+    "access": null,
+    "description": null,
+    "lineNumber": 1
+  },
+  {
+    "__docId__": 11,
+    "kind": "file",
+    "name": "src/expandReducerToKeys.js",
+    "content": "import { map, into } from 'transducers.js'\n\n/**\n * Expands a single reducer into an object with many reducers, suitable for\n * composition with `combineReducers`, `transformReducers` etc.\n *\n * @example\n * const reducer = (state = null, action) => action.type === 'SUCCESS' ? action.payload : state\n * const reducerKeys = [ 'a', 'b' ]\n * const reducers = expandReducerToKeys(reducerKeys)(reducer)\n *\n * // returns 'some-payload'\n * [ {}, {\n *   type: 'SUCCESS',\n *   payload: 'some-payload',\n * } ].reduce(reducers.a, undefined)\n *\n * // returns null\n * reducers.b(undefined, {})\n *\n * @param {string[]} reducerKeys The keys to populate with the reducer\n * @returns {function} The reducer transformer\n */\nfunction expandReducerToKeys(reducerKeys) {\n  return reducer => {\n    const xform = map(key => [ key, reducer ])\n    return into({}, xform, reducerKeys)\n  }\n}\n\nexport default expandReducerToKeys\n",
+    "static": true,
+    "longname": "src/expandReducerToKeys.js",
+    "access": null,
+    "description": null,
+    "lineNumber": 1
+  },
+  {
+    "__docId__": 12,
+    "kind": "function",
+    "name": "expandReducerToKeys",
+    "memberof": "src/expandReducerToKeys.js",
+    "generator": false,
+    "async": false,
+    "static": true,
+    "longname": "src/expandReducerToKeys.js~expandReducerToKeys",
+    "access": null,
+    "export": true,
+    "importPath": "redux-xforms/expandReducerToKeys.js",
+    "importStyle": "expandReducerToKeys",
+    "description": "Expands a single reducer into an object with many reducers, suitable for\ncomposition with `combineReducers`, `transformReducers` etc.",
+    "examples": [
+      "const reducer = (state = null, action) => action.type === 'SUCCESS' ? action.payload : state\nconst reducerKeys = [ 'a', 'b' ]\nconst reducers = expandReducerToKeys(reducerKeys)(reducer)\n\n// returns 'some-payload'\n[ {}, {\n  type: 'SUCCESS',\n  payload: 'some-payload',\n} ].reduce(reducers.a, undefined)\n\n// returns null\nreducers.b(undefined, {})"
+    ],
+    "lineNumber": 24,
+    "unknown": [
+      {
+        "tagName": "@returns",
+        "tagValue": "{function} The reducer transformer"
+      }
+    ],
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "string[]"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "reducerKeys",
+        "description": "The keys to populate with the reducer"
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "function"
+      ],
+      "spread": false,
+      "description": "The reducer transformer"
+    }
+  },
+  {
+    "__docId__": 13,
+    "kind": "file",
+    "name": "src/expandReducerToKeys.spec.js",
+    "content": "import { combineReducers, compose } from 'redux'\n\nimport { expandReducerToKeys } from './'\n\ndescribe('expandReducerToKeys', () => {\n  describe('example', () => {\n    it('should expand a reducer to two keys', () => {\n      const reducer = (state = null, action) => action.type === 'SUCCESS' ? action.payload : state\n      const reducerKeys = [ 'a', 'b' ]\n      const reducers = expandReducerToKeys(reducerKeys)(reducer)\n\n      const stateA = [ {}, {\n        type: 'SUCCESS',\n        payload: 'some-payload',\n      } ].reduce(reducers.a, undefined)\n      expect(stateA).toBe('some-payload')\n\n      const stateB = reducers.b(undefined, {})\n      expect(stateB).toBe(null)\n    })\n  })\n  describe('simple reducer', () => {\n    it('should work with combineReducers', () => {\n      const reducer = (state = null, action) => action.type === 'SUCCESS' ? action.payload : state\n      const reducerKeys = [ 'a', 'b' ]\n      const reducers = compose(\n        combineReducers,\n        expandReducerToKeys(reducerKeys)\n      )(reducer)\n\n      const state = [ {}, {\n        type: 'SUCCESS',\n        payload: 'some-payload',\n      } ].reduce(reducers, undefined)\n      expect(state).toEqual({\n        a: 'some-payload',\n        b: 'some-payload',\n      })\n    })\n  })\n})\n",
+    "static": true,
+    "longname": "src/expandReducerToKeys.spec.js",
+    "access": null,
+    "description": null,
+    "lineNumber": 1
+  },
+  {
+    "__docId__": 14,
+    "kind": "file",
+    "name": "src/index.js",
+    "content": "import createByKey, { createGetByKey } from './createByKey'\nimport createReducersByKey from './createReducersByKey'\nimport expandReducerToKeys from './expandReducerToKeys'\nimport isolateSlice from './isolateSlice'\nimport transformReducers from './transformReducers'\nimport updateSlice from './updateSlice'\nimport withFilter from './withFilter'\nimport withInitialState from './withInitialState'\nimport withOldStateIfEqual from './withOldStateIfEqual'\nimport withReducer from './withReducer'\n\nexport {\n  createByKey,\n  createGetByKey,\n  createReducersByKey,\n  expandReducerToKeys,\n  isolateSlice,\n  transformReducers,\n  updateSlice,\n  withFilter,\n  withInitialState,\n  withOldStateIfEqual,\n  withReducer,\n}\n",
+    "static": true,
+    "longname": "src/index.js",
+    "access": null,
+    "description": null,
+    "lineNumber": 1
+  },
+  {
+    "__docId__": 15,
+    "kind": "file",
+    "name": "src/isolateSlice.js",
+    "content": "import withReducer from './withReducer'\n/**\n * Creates a reducer transformer that calls the reducer with only a slice of\n * the state, based on the action.\n *\n * Make sure to put a filtering xform in front of this, so actions that can't\n * be mapped wil not run. It also expects state to be initialized as an Object.\n *\n * @example\n * const toIdSlice = isolateSlice(action => action.id)(reducer)\n * // returns reducer({ username: 'xForman' }, { id: 2 })\n * toIdSlice(\n *   { 2: { username: 'xForman' } },\n *   { id: 2 }\n * )\n *\n * @param {function(action: Object): string} mapActionToSlice Map action to the key of the updating slice.\n * @returns {function} A reducer transformer\n */\n\nfunction isolateSlice(mapActionToSlice) {\n  return withReducer((state, action) => state[mapActionToSlice(action)])\n}\n\nexport default isolateSlice\n",
+    "static": true,
+    "longname": "src/isolateSlice.js",
+    "access": null,
+    "description": null,
+    "lineNumber": 1
+  },
+  {
+    "__docId__": 16,
+    "kind": "function",
+    "name": "isolateSlice",
+    "memberof": "src/isolateSlice.js",
+    "generator": false,
+    "async": false,
+    "static": true,
+    "longname": "src/isolateSlice.js~isolateSlice",
+    "access": null,
+    "export": true,
+    "importPath": "redux-xforms/isolateSlice.js",
+    "importStyle": "isolateSlice",
+    "description": "Creates a reducer transformer that calls the reducer with only a slice of\nthe state, based on the action.\n\nMake sure to put a filtering xform in front of this, so actions that can't\nbe mapped wil not run. It also expects state to be initialized as an Object.",
+    "examples": [
+      "const toIdSlice = isolateSlice(action => action.id)(reducer)\n// returns reducer({ username: 'xForman' }, { id: 2 })\ntoIdSlice(\n  { 2: { username: 'xForman' } },\n  { id: 2 }\n)"
+    ],
+    "lineNumber": 21,
+    "unknown": [
+      {
+        "tagName": "@returns",
+        "tagValue": "{function} A reducer transformer"
+      }
+    ],
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "function(action: Object): string"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "mapActionToSlice",
+        "description": "Map action to the key of the updating slice."
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "function"
+      ],
+      "spread": false,
+      "description": "A reducer transformer"
+    }
+  },
+  {
+    "__docId__": 17,
+    "kind": "file",
+    "name": "src/isolateSlice.spec.js",
+    "content": "import { isolateSlice } from './'\n\ndescribe('isolateSlice', () => {\n  it('should work as in the example', () => {\n    const reducer = jest.fn();\n    const toIdSlice = isolateSlice(action => action.id)(reducer)\n    toIdSlice(\n      { 2: { username: 'xForman' } },\n      { id: 2 }\n    )\n    expect(reducer.mock.calls.length).toBe(1)\n    expect(reducer.mock.calls[0].length).toBe(2)\n    expect(reducer.mock.calls[0][0]).toEqual({ username: 'xForman' })\n    expect(reducer.mock.calls[0][1]).toEqual({ id: 2 })\n  })\n\n  describe('simple reducer', () => {\n    const ACTION_TYPE = 'ACTION_TYPE'\n    const reducer = (state = {}, action) => {\n      if (action.type === ACTION_TYPE) {\n        return { ...state, nested: action.payload }\n      }\n      return state\n    }\n\n    it('should skip actions where predicate returns false', () => {\n\n      const mapActionToSlice = action => action.sliceName\n      const xform = isolateSlice(mapActionToSlice)\n      const isolatedReducer = xform(reducer)\n\n      const initialState = {\n        sliced: { otherThing: 'something-else' },\n        otherSlice: {},\n      }\n      const state = [\n        { type: ACTION_TYPE, payload: 'thing', sliceName: 'sliced' },\n      ].reduce(isolatedReducer, initialState)\n      expect(state).toEqual({ otherThing: 'something-else', nested: 'thing' })\n    })\n\n  })\n})\n",
+    "static": true,
+    "longname": "src/isolateSlice.spec.js",
+    "access": null,
+    "description": null,
+    "lineNumber": 1
+  },
+  {
+    "__docId__": 18,
+    "kind": "file",
+    "name": "src/transformReducers.js",
+    "content": "import { map, into } from 'transducers.js'\n\n/**\n * Transforms an object with reducers into an object with the original reducers\n * merged with transformed reducers for matching keys. It can for example be\n * composed with combineReducers or createReducersByKey.\n *\n * @example\n * const reducer = (state = null, action) => {\n *   return action.type === 'SUCCESS' ? action.payload\n *     : state\n * }\n * const enhance = reducer => (state = {}, action) => ({\n *   ...state,\n *   enhanced: reducer(state.enhanced, action),\n * })\n * const reducers = {\n *   a: reducer,\n *   b: reducer,\n * }\n * const transformedReducers = transformReducers({\n *   a: enhance,\n * })(reducers)\n *\n * // returns { enhanced: 'some-payload' }\n * [{}, {\n *   type: 'SUCCESS',\n *   payload: 'some-payload',\n * }].reduce(transformedReducers.a, undefined)\n *\n * // returns null\n * transformedReducers.b(undefined, {})\n *\n * @param {Object} transformers The reducer transformers\n * @returns {function} The reducer transformer\n */\nfunction transformReducers(transformers = {}) {\n  return reducers => {\n    const xf = map(\n      ([ key, reducer ]) => [\n        key,\n        transformers.hasOwnProperty(key) ? transformers[key](reducer)\n          : reducer,\n      ]\n    )\n    return into({}, xf, reducers)\n  }\n}\n\nexport default transformReducers\n",
+    "static": true,
+    "longname": "src/transformReducers.js",
+    "access": null,
+    "description": null,
+    "lineNumber": 1
+  },
+  {
+    "__docId__": 19,
+    "kind": "function",
+    "name": "transformReducers",
+    "memberof": "src/transformReducers.js",
+    "generator": false,
+    "async": false,
+    "static": true,
+    "longname": "src/transformReducers.js~transformReducers",
+    "access": null,
+    "export": true,
+    "importPath": "redux-xforms/transformReducers.js",
+    "importStyle": "transformReducers",
+    "description": "Transforms an object with reducers into an object with the original reducers\nmerged with transformed reducers for matching keys. It can for example be\ncomposed with combineReducers or createReducersByKey.",
+    "examples": [
+      "const reducer = (state = null, action) => {\n  return action.type === 'SUCCESS' ? action.payload\n    : state\n}\nconst enhance = reducer => (state = {}, action) => ({\n  ...state,\n  enhanced: reducer(state.enhanced, action),\n})\nconst reducers = {\n  a: reducer,\n  b: reducer,\n}\nconst transformedReducers = transformReducers({\n  a: enhance,\n})(reducers)\n\n// returns { enhanced: 'some-payload' }\n[{}, {\n  type: 'SUCCESS',\n  payload: 'some-payload',\n}].reduce(transformedReducers.a, undefined)\n\n// returns null\ntransformedReducers.b(undefined, {})"
+    ],
+    "lineNumber": 37,
+    "unknown": [
+      {
+        "tagName": "@returns",
+        "tagValue": "{function} The reducer transformer"
+      }
+    ],
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "Object"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "transformers",
+        "description": "The reducer transformers"
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "function"
+      ],
+      "spread": false,
+      "description": "The reducer transformer"
+    }
+  },
+  {
+    "__docId__": 20,
+    "kind": "file",
+    "name": "src/transformReducers.spec.js",
+    "content": "import { combineReducers, compose } from 'redux'\n\nimport { transformReducers, createReducersByKey } from './'\n\ndescribe('transformReducers', () => {\n  describe('example', () => {\n    it('should handle a two filters with one enhancer', () => {\n      const reducer = (state = null, action) => action.type === 'SUCCESS' ? action.payload : state\n      const enhancer = reducer => (state = {}, action) => ({\n        ...state,\n        enhanced: reducer(state.enhanced, action),\n      })\n      const reducers = {\n        a: reducer,\n        b: reducer,\n      }\n      const transformedReducers = transformReducers({\n        a: enhancer,\n      })(reducers)\n\n      const stateA = [ {}, {\n        type: 'SUCCESS',\n        payload: 'some-payload',\n      } ].reduce(transformedReducers.a, undefined)\n\n      const stateB = transformedReducers.b(undefined, {})\n\n      expect(stateA.enhanced).toBe('some-payload')\n      expect(stateB).toBe(null)\n    })\n  })\n  describe('simple reducer', () => {\n    const reducer = (state = null, action) => action.type === 'SUCCESS' ? action.payload : state\n    it('should work with combineReducers', () => {\n      const enhancer = reducer => (state = {}, action) => ({\n        ...state,\n        enhanced: reducer(state.enhanced, action),\n      })\n      const transformedReducers = compose(\n        combineReducers,\n        transformReducers({ a: enhancer })\n      )({ a: reducer, b: reducer })\n\n      const state = [ {}, {\n        type: 'SUCCESS',\n        payload: 'some-payload',\n      } ].reduce(transformedReducers, undefined)\n\n      expect(state.a.enhanced).toBe('some-payload')\n      expect(state.b).toBe('some-payload')\n    })\n    it('should work with createReducersByKey', () => {\n      const enhanceReducersByKey = createReducersByKey(\n        action => action.hasOwnProperty('filterName'),\n        action => action.filterName\n      )\n      const enhancer = reducer => (state = {}, action) => ({\n        ...state,\n        enhanced: reducer(state.enhanced, action),\n      })\n\n      const reducers = {\n        FILTER_ONE: reducer,\n        FILTER_TWO: reducer,\n      }\n      const transformedReducer = compose(\n        enhanceReducersByKey,\n        transformReducers({ FILTER_ONE: enhancer })\n      )(reducers)\n\n      const state = transformedReducer({\n        FILTER_ONE: { enhanced: { username: 'mrXform' } },\n        FILTER_TWO: { username: 'otherUser' },\n      }, {\n        type: 'SUCCESS',\n        filterName: 'FILTER_ONE',\n        payload: { username: 'nextUserName' },\n      })\n\n      expect(state).toEqual({\n       FILTER_ONE: { enhanced: { username: 'nextUserName' } },\n       FILTER_TWO: {  username: 'otherUser' },\n      })\n    })\n  })\n})\n",
+    "static": true,
+    "longname": "src/transformReducers.spec.js",
+    "access": null,
+    "description": null,
+    "lineNumber": 1
+  },
+  {
+    "__docId__": 21,
+    "kind": "file",
+    "name": "src/updateSlice.js",
+    "content": "/**\n * Creates a reducer transformer that updates only one slice of the state based\n * on the action.\n *\n * Make sure to put a filtering xform in front of this, so actions that can't\n * be mapped wil not run. It also expects state to be initialized as an Object.\n *\n * @example\n * const reduceSlice = updateSlice(action => action.id)(reducer)\n * // returns {\n * //   2: reducer({ username: 'xForman' }, action),\n * // }\n * reduceSlice(\n *   { 2: { username: 'xForman' }, 3: { username: 'yUser' } },\n *   { id: 2 }\n * )\n *\n * @param {function(action: Object): string} mapActionToSlice Map action to the key of the updating slice.\n * @returns {function} A reducer transformer\n */\nfunction updateSlice(mapActionToSlice) {\n  return reducer => (state, action) => {\n    const result = reducer(state, action)\n    const key = mapActionToSlice(action)\n\n    if (state[key] === result) {\n      return state\n    }\n    return ({ ...state, [key]: result })\n  }\n}\n\nexport default updateSlice\n",
+    "static": true,
+    "longname": "src/updateSlice.js",
+    "access": null,
+    "description": null,
+    "lineNumber": 1
+  },
+  {
+    "__docId__": 22,
+    "kind": "function",
+    "name": "updateSlice",
+    "memberof": "src/updateSlice.js",
+    "generator": false,
+    "async": false,
+    "static": true,
+    "longname": "src/updateSlice.js~updateSlice",
+    "access": null,
+    "export": true,
+    "importPath": "redux-xforms/updateSlice.js",
+    "importStyle": "updateSlice",
+    "description": "Creates a reducer transformer that updates only one slice of the state based\non the action.\n\nMake sure to put a filtering xform in front of this, so actions that can't\nbe mapped wil not run. It also expects state to be initialized as an Object.",
+    "examples": [
+      "const reduceSlice = updateSlice(action => action.id)(reducer)\n// returns {\n//   2: reducer({ username: 'xForman' }, action),\n// }\nreduceSlice(\n  { 2: { username: 'xForman' }, 3: { username: 'yUser' } },\n  { id: 2 }\n)"
+    ],
+    "lineNumber": 21,
+    "unknown": [
+      {
+        "tagName": "@returns",
+        "tagValue": "{function} A reducer transformer"
+      }
+    ],
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "function(action: Object): string"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "mapActionToSlice",
+        "description": "Map action to the key of the updating slice."
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "function"
+      ],
+      "spread": false,
+      "description": "A reducer transformer"
+    }
+  },
+  {
+    "__docId__": 23,
+    "kind": "file",
+    "name": "src/updateSlice.spec.js",
+    "content": "import { updateSlice } from './'\n\ndescribe('updateSlice', () => {\n  it('should work as in the example', () => {\n    const reducer = jest.fn();\n    reducer.mockReturnValueOnce({ username: 'new-username' })\n    const reduceSlice = updateSlice(action => action.id)(reducer)\n    // returns {\n    //   2: reducer({ username: 'xForman' }, action),\n    // }\n    const state = reduceSlice(\n      { 2: { username: 'xForman' }, 3: { username: 'yUser' } },\n      { id: 2 }\n    )\n    expect(state).toEqual({\n      2: { username: 'new-username' },\n      3: { username: 'yUser' },\n    })\n    expect(reducer.mock.calls.length).toBe(1)\n    expect(reducer.mock.calls[0].length).toBe(2)\n    expect(reducer.mock.calls[0][0]).toEqual({\n      2: { username: 'xForman' },\n      3: { username: 'yUser' },\n    })\n    expect(reducer.mock.calls[0][1]).toEqual({ id: 2 })\n  })\n\n\n  describe('simple reducer', () => {\n    const ACTION_TYPE = 'ACTION_TYPE'\n\n    it('should update the slice with key from action', () => {\n      const mapActionToSlice = action => action.sliceName\n\n      const reducer = (state = {}, action) => {\n        if(action.type === ACTION_TYPE) {\n          return action.payload\n        }\n        return state[mapActionToSlice(action)]\n      }\n\n      const xform = updateSlice(mapActionToSlice)\n      const sliceReducer = xform(reducer)\n\n      const state = [\n        { type: ACTION_TYPE, payload: 'shiny thing', sliceName: 'sliced' },\n      ].reduce(sliceReducer, {})\n      expect(state).toEqual({ sliced: 'shiny thing' })\n    })\n\n  })\n})\n",
+    "static": true,
+    "longname": "src/updateSlice.spec.js",
+    "access": null,
+    "description": null,
+    "lineNumber": 1
+  },
+  {
+    "__docId__": 24,
+    "kind": "file",
+    "name": "src/withFilter.js",
+    "content": "\n/**\n * Creates a reducer transformer that will filter based on the action\n *\n * @example\n * const onlyEvenIds = withFilter(action => action.id % 2 === 0)(reducer)\n *\n * // returns reducer('some-state', { id: 2 })\n * onlyEvenIds('some-state', { id: 2 })\n *\n * // returns 'some-state'\n * onlyEvenIds('some-state', { id: 3 })\n *\n * @param {function(action: Object): bool} predicate The predicate to use\n * @returns {function} A reducer transformer\n */\nfunction withFilter(predicate) {\n  return reducer => (state, action) => {\n    const isInitializationCall = state === undefined\n    const shouldRunReducer = predicate(action) || isInitializationCall\n    return shouldRunReducer ? reducer(state, action) : state\n  }\n}\n\nexport default withFilter\n",
+    "static": true,
+    "longname": "src/withFilter.js",
+    "access": null,
+    "description": null,
+    "lineNumber": 1
+  },
+  {
+    "__docId__": 25,
+    "kind": "function",
+    "name": "withFilter",
+    "memberof": "src/withFilter.js",
+    "generator": false,
+    "async": false,
+    "static": true,
+    "longname": "src/withFilter.js~withFilter",
+    "access": null,
+    "export": true,
+    "importPath": "redux-xforms/withFilter.js",
+    "importStyle": "withFilter",
+    "description": "Creates a reducer transformer that will filter based on the action",
+    "examples": [
+      "const onlyEvenIds = withFilter(action => action.id % 2 === 0)(reducer)\n\n// returns reducer('some-state', { id: 2 })\nonlyEvenIds('some-state', { id: 2 })\n\n// returns 'some-state'\nonlyEvenIds('some-state', { id: 3 })"
+    ],
+    "lineNumber": 17,
+    "unknown": [
+      {
+        "tagName": "@returns",
+        "tagValue": "{function} A reducer transformer"
+      }
+    ],
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "function(action: Object): bool"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "predicate",
+        "description": "The predicate to use"
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "function"
+      ],
+      "spread": false,
+      "description": "A reducer transformer"
+    }
+  },
+  {
+    "__docId__": 26,
+    "kind": "file",
+    "name": "src/withFilter.spec.js",
+    "content": "import  { withFilter } from './'\n\ndescribe('withFilter', () => {\n\n  it('should work as in the example', () => {\n    const reducer = jest.fn();\n    reducer.mockReturnValueOnce('some-next-state')\n    const onlyEvenIds = withFilter(action => action.id % 2 === 0)(reducer)\n\n   // returns reducer('some-state', { id: 2 })\n    expect(onlyEvenIds('some-state', { id: 2 })).toBe('some-next-state')\n    expect(onlyEvenIds('some-initial-state', { id: 3 })).toBe('some-initial-state')\n\n    expect(reducer.mock.calls.length).toBe(1)\n    expect(reducer.mock.calls[0].length).toBe(2)\n    expect(reducer.mock.calls[0][0]).toEqual('some-state', { id: 2 })\n  })\n\n  describe('simple reducer', () => {\n    const ACTION_TYPE = 'ACTION_TYPE'\n    const reducer = (state = null, action) => action.type === ACTION_TYPE ? action.payload\n      : state\n\n    describe('match payload', () => {\n      const xform = withFilter(action => action.payload === 'shiny thing')\n      const onlyShinyReducer = xform(reducer)\n\n      it('should return initial state', () => {\n        const state = onlyShinyReducer(undefined, {})\n        expect(state).toBe(null)\n      })\n      it('should skip actions where predicate returns false', () => {\n        const state = [\n          {},\n          { type: ACTION_TYPE, payload: 'shiny thing' },\n          { type: ACTION_TYPE, payload: 'useless thing' },\n        ].reduce(onlyShinyReducer, undefined)\n        expect(state).toBe('shiny thing')\n      })\n\n    })\n  })\n})\n",
+    "static": true,
+    "longname": "src/withFilter.spec.js",
+    "access": null,
+    "description": null,
+    "lineNumber": 1
+  },
+  {
+    "__docId__": 27,
+    "kind": "file",
+    "name": "src/withInitialState.js",
+    "content": "\n/**\n * Creates a reducer transformer that will inject initial state before calling\n * the reducing function\n *\n * @example\n * const initializedReducer = withInitialState('some-state')(reducer)\n *\n * // returns reducer('some-state', { id: 2 })\n * initializedReducer(undefined, { id: 2 })\n *\n * @param {any} initialState The initial state\n * @returns {function} A reducer transformer\n */\nfunction withInitialState(initialState) {\n  return reducer => (state = initialState, action) => reducer(state, action)\n}\n\nexport default withInitialState\n",
+    "static": true,
+    "longname": "src/withInitialState.js",
+    "access": null,
+    "description": null,
+    "lineNumber": 1
+  },
+  {
+    "__docId__": 28,
+    "kind": "function",
+    "name": "withInitialState",
+    "memberof": "src/withInitialState.js",
+    "generator": false,
+    "async": false,
+    "static": true,
+    "longname": "src/withInitialState.js~withInitialState",
+    "access": null,
+    "export": true,
+    "importPath": "redux-xforms/withInitialState.js",
+    "importStyle": "withInitialState",
+    "description": "Creates a reducer transformer that will inject initial state before calling\nthe reducing function",
+    "examples": [
+      "const initializedReducer = withInitialState('some-state')(reducer)\n\n// returns reducer('some-state', { id: 2 })\ninitializedReducer(undefined, { id: 2 })"
+    ],
+    "lineNumber": 15,
+    "unknown": [
+      {
+        "tagName": "@returns",
+        "tagValue": "{function} A reducer transformer"
+      }
+    ],
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "any"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "initialState",
+        "description": "The initial state"
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "function"
+      ],
+      "spread": false,
+      "description": "A reducer transformer"
+    }
+  },
+  {
+    "__docId__": 29,
+    "kind": "file",
+    "name": "src/withInitialState.spec.js",
+    "content": "import { withInitialState } from './'\n\ndescribe('withInitialState', () => {\n  it('should work as in the example', () => {\n    const reducer = jest.fn();\n    reducer.mockReturnValueOnce('some-next-state')\n   const initializedReducer = withInitialState('some-state')(reducer)\n\n    // returns reducer('some-state', { id: 2 })\n    expect(initializedReducer(undefined, { id: 2 })).toBe('some-next-state')\n\n    expect(reducer.mock.calls.length).toBe(1)\n    expect(reducer.mock.calls[0].length).toBe(2)\n    expect(reducer.mock.calls[0][0]).toEqual('some-state', { id: 2 })\n  })\n\n  describe('simple reducer', () => {\n    const ACTION_TYPE = 'ACTION_TYPE'\n    const reducer = (state, action) => action.type === ACTION_TYPE ? action.payload\n      : state\n    const xform = withInitialState({ something: 'some-thing' })\n    const reducerWithInitialState = xform(reducer)\n\n    it('should inject initial state', () => {\n      const state = reducerWithInitialState(undefined, {})\n      expect(state).toEqual({ something: 'some-thing' })\n    })\n    it('should update state when reducer returns new state', () => {\n      const state = [ {}, {\n        type: ACTION_TYPE,\n        payload: 'some-payload',\n      }].reduce(reducerWithInitialState, undefined)\n      expect(state).toBe('some-payload')\n    })\n  })\n})\n",
+    "static": true,
+    "longname": "src/withInitialState.spec.js",
+    "access": null,
+    "description": null,
+    "lineNumber": 1
+  },
+  {
+    "__docId__": 30,
+    "kind": "file",
+    "name": "src/withOldStateIfEqual.js",
+    "content": "\n/**\n * Creates a reducer transformer that will compare the old and new state with\n * a custom function, and re-use the old state if it returns true.\n *\n * @example\n * const caseInsensitiveReducer = withOldStateIfEqual(\n *   (state, nextState) => state.toLowerCase() === nextState.toLowerCase()\n * )(reducer)\n *\n * // returns 'someState' if reducer returns 'SomeState'\n * initializedReducer('someState', { payload: 'SomeState' })\n *\n * @param {function(state: any, nextState: any): bool} compareStates Predicate for equality\n * @returns {function} A reducer transformer\n */\nfunction withOldStateIfEqual(compareStates) {\n  return reducer => (state, action) => {\n    const isInitializationCall = state === undefined\n    const nextState = reducer(state, action)\n    const shouldReturnOldState = !isInitializationCall &&\n      state !== nextState && compareStates(state, nextState)\n\n    if (shouldReturnOldState) {\n      return state\n    }\n    return nextState\n  }\n}\n\nexport default withOldStateIfEqual\n",
+    "static": true,
+    "longname": "src/withOldStateIfEqual.js",
+    "access": null,
+    "description": null,
+    "lineNumber": 1
+  },
+  {
+    "__docId__": 31,
+    "kind": "function",
+    "name": "withOldStateIfEqual",
+    "memberof": "src/withOldStateIfEqual.js",
+    "generator": false,
+    "async": false,
+    "static": true,
+    "longname": "src/withOldStateIfEqual.js~withOldStateIfEqual",
+    "access": null,
+    "export": true,
+    "importPath": "redux-xforms/withOldStateIfEqual.js",
+    "importStyle": "withOldStateIfEqual",
+    "description": "Creates a reducer transformer that will compare the old and new state with\na custom function, and re-use the old state if it returns true.",
+    "examples": [
+      "const caseInsensitiveReducer = withOldStateIfEqual(\n  (state, nextState) => state.toLowerCase() === nextState.toLowerCase()\n)(reducer)\n\n// returns 'someState' if reducer returns 'SomeState'\ninitializedReducer('someState', { payload: 'SomeState' })"
+    ],
+    "lineNumber": 17,
+    "unknown": [
+      {
+        "tagName": "@returns",
+        "tagValue": "{function} A reducer transformer"
+      }
+    ],
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "function(state: any, nextState: any): bool"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "compareStates",
+        "description": "Predicate for equality"
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "function"
+      ],
+      "spread": false,
+      "description": "A reducer transformer"
+    }
+  },
+  {
+    "__docId__": 32,
+    "kind": "file",
+    "name": "src/withOldStateIfEqual.spec.js",
+    "content": "import { withOldStateIfEqual } from './'\n\ndescribe('withOldStateIfEqual', () => {\n\n  it('should work as in the example', () => {\n    const reducer = jest.fn();\n    reducer.mockReturnValueOnce('SomeState')\n\n    const caseInsensitiveReducer = withOldStateIfEqual(\n      (state, nextState) => state.toLowerCase() === nextState.toLowerCase()\n    )(reducer)\n\n    // returns 'someState' if reducer returns 'SomeState'\n    expect(caseInsensitiveReducer('someState', { payload: 'SomeState' })).toBe('someState')\n\n    expect(reducer.mock.calls.length).toBe(1)\n    expect(reducer.mock.calls[0].length).toBe(2)\n    expect(reducer.mock.calls[0][0]).toEqual('someState', { payload: 'SomeState' })\n  })\n\n  describe('simple reducer', () => {\n    const ACTION_TYPE = 'ACTION_TYPE'\n    const reducer = (state = { payload: null }, action) => action.type === ACTION_TYPE ? { ...state, payload: action.payload }\n      : state\n\n    describe('compare payloads', () => {\n      const xform = withOldStateIfEqual((state, nextState) => nextState.payload === nextState.payload)\n      const optimizedReducer = xform(reducer)\n\n      it('should return initial state', () => {\n        const state = optimizedReducer(undefined, {})\n        expect(state).toEqual({ payload: null })\n      })\n      it('should use the old state when comparison returns true', () => {\n        const prevState = [\n          {},\n          { type: ACTION_TYPE, payload: 'shiny thing' },\n        ].reduce(optimizedReducer, undefined)\n        const state = optimizedReducer(prevState, { type: ACTION_TYPE, payload: 'shiny thing' })\n\n        expect(state).toBe(prevState)\n      })\n\n    })\n  })\n})\n",
+    "static": true,
+    "longname": "src/withOldStateIfEqual.spec.js",
+    "access": null,
+    "description": null,
+    "lineNumber": 1
+  },
+  {
+    "__docId__": 33,
+    "kind": "file",
+    "name": "src/withReducer.js",
+    "content": "/**\n * Creates a reducer transformer that applies an injected reducer before applying\n * the next reducer.\n *\n * @example\n * const toIdSlice = withReducer((state, action) => state[action.id])(reducer)\n * // returns reducer({ username: 'xForman' }, { id: 2 })\n * toIdSlice(\n *   { 2: { username: 'xForman' } },\n *   { id: 2 }\n * )\n *\n * @param {function} injectedReducer Reducer to run before the next reducer\n * @returns {function} The wrapped reducer\n */\n\nfunction withReducer(injectedReducer) {\n  return reducer => (state, action) => {\n    return reducer(\n      injectedReducer(state, action),\n      action\n    )\n  }\n}\n\nexport default withReducer\n",
+    "static": true,
+    "longname": "src/withReducer.js",
+    "access": null,
+    "description": null,
+    "lineNumber": 1
+  },
+  {
+    "__docId__": 34,
+    "kind": "function",
+    "name": "withReducer",
+    "memberof": "src/withReducer.js",
+    "generator": false,
+    "async": false,
+    "static": true,
+    "longname": "src/withReducer.js~withReducer",
+    "access": null,
+    "export": true,
+    "importPath": "redux-xforms/withReducer.js",
+    "importStyle": "withReducer",
+    "description": "Creates a reducer transformer that applies an injected reducer before applying\nthe next reducer.",
+    "examples": [
+      "const toIdSlice = withReducer((state, action) => state[action.id])(reducer)\n// returns reducer({ username: 'xForman' }, { id: 2 })\ntoIdSlice(\n  { 2: { username: 'xForman' } },\n  { id: 2 }\n)"
+    ],
+    "lineNumber": 17,
+    "unknown": [
+      {
+        "tagName": "@returns",
+        "tagValue": "{function} The wrapped reducer"
+      }
+    ],
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "function"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "injectedReducer",
+        "description": "Reducer to run before the next reducer"
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "function"
+      ],
+      "spread": false,
+      "description": "The wrapped reducer"
+    }
+  },
+  {
+    "__docId__": 35,
+    "kind": "file",
+    "name": "src/withReducer.spec.js",
+    "content": "import { withReducer } from './'\n\ndescribe('withReducer', () => {\n  it('should work as in the example', () => {\n    const reducer = jest.fn();\n    reducer.mockReturnValueOnce({ username: 'new-username' })\n\n    const toIdSlice = withReducer((state, action) => state[action.id])(reducer)\n\n    // returns reducer({ username: 'xForman' }, { id: 2 })\n    expect(toIdSlice(\n      { 2: { username: 'xForman' } },\n      { id: 2 }\n    )).toEqual({ username: 'new-username' })\n\n    expect(reducer.mock.calls.length).toBe(1)\n    expect(reducer.mock.calls[0].length).toBe(2)\n    expect(reducer.mock.calls[0][0]).toEqual({ username: 'xForman' }, { id: 2 })\n  })\n\n  describe('simple reducer', () => {\n    const ACTION_TYPE = 'ACTION_TYPE'\n    const reducer = (state = {}, action) => {\n      if (action.type === ACTION_TYPE) {\n        return { ...state, nested: action.payload }\n      }\n      return state\n    }\n\n    it('should return the slice with nested payload', () => {\n\n      const mapActionToSlice = (state, action) => state[action.sliceName]\n      const xform = withReducer(mapActionToSlice)\n      const slicedReducer = xform(reducer)\n\n      const initialState = {\n        sliced: { otherThing: 'something-else' },\n        otherSlice: {},\n      }\n      const state = [\n        { type: ACTION_TYPE, payload: 'thing', sliceName: 'sliced' },\n      ].reduce(slicedReducer, initialState)\n      expect(state).toEqual({ otherThing: 'something-else', nested: 'thing' })\n    })\n\n  })\n})\n",
+    "static": true,
+    "longname": "src/withReducer.spec.js",
+    "access": null,
+    "description": null,
+    "lineNumber": 1
+  },
+  {
+    "__docId__": 37,
+    "kind": "external",
+    "name": "Infinity",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Infinity",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Infinity",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 38,
+    "kind": "external",
+    "name": "NaN",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/NaN",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~NaN",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 39,
+    "kind": "external",
+    "name": "undefined",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/undefined",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~undefined",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 40,
+    "kind": "external",
+    "name": "null",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/null",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~null",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 41,
+    "kind": "external",
+    "name": "Object",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Object",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 42,
+    "kind": "external",
+    "name": "object",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~object",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 43,
+    "kind": "external",
+    "name": "Function",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Function",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 44,
+    "kind": "external",
+    "name": "function",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~function",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 45,
+    "kind": "external",
+    "name": "Boolean",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Boolean",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 46,
+    "kind": "external",
+    "name": "boolean",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~boolean",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 47,
+    "kind": "external",
+    "name": "Symbol",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Symbol",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Symbol",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 48,
+    "kind": "external",
+    "name": "Error",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Error",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 49,
+    "kind": "external",
+    "name": "EvalError",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/EvalError",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~EvalError",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 50,
+    "kind": "external",
+    "name": "InternalError",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/InternalError",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~InternalError",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 51,
+    "kind": "external",
+    "name": "RangeError",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RangeError",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~RangeError",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 52,
+    "kind": "external",
+    "name": "ReferenceError",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/ReferenceError",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~ReferenceError",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 53,
+    "kind": "external",
+    "name": "SyntaxError",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/SyntaxError",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~SyntaxError",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 54,
+    "kind": "external",
+    "name": "TypeError",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/TypeError",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~TypeError",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 55,
+    "kind": "external",
+    "name": "URIError",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/URIError",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~URIError",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 56,
+    "kind": "external",
+    "name": "Number",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Number",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 57,
+    "kind": "external",
+    "name": "number",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~number",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 58,
+    "kind": "external",
+    "name": "Date",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Date",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 59,
+    "kind": "external",
+    "name": "String",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~String",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 60,
+    "kind": "external",
+    "name": "string",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~string",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 61,
+    "kind": "external",
+    "name": "RegExp",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~RegExp",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 62,
+    "kind": "external",
+    "name": "Array",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Array",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 63,
+    "kind": "external",
+    "name": "Int8Array",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Int8Array",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Int8Array",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 64,
+    "kind": "external",
+    "name": "Uint8Array",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Uint8Array",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Uint8Array",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 65,
+    "kind": "external",
+    "name": "Uint8ClampedArray",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Uint8ClampedArray",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Uint8ClampedArray",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 66,
+    "kind": "external",
+    "name": "Int16Array",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Int16Array",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Int16Array",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 67,
+    "kind": "external",
+    "name": "Uint16Array",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Uint16Array",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Uint16Array",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 68,
+    "kind": "external",
+    "name": "Int32Array",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Int32Array",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Int32Array",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 69,
+    "kind": "external",
+    "name": "Uint32Array",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Uint32Array",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Uint32Array",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 70,
+    "kind": "external",
+    "name": "Float32Array",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Float32Array",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Float32Array",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 71,
+    "kind": "external",
+    "name": "Float64Array",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Float64Array",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Float64Array",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 72,
+    "kind": "external",
+    "name": "Map",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Map",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 73,
+    "kind": "external",
+    "name": "Set",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Set",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Set",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 74,
+    "kind": "external",
+    "name": "WeakMap",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/WeakMap",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~WeakMap",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 75,
+    "kind": "external",
+    "name": "WeakSet",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/WeakSet",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~WeakSet",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 76,
+    "kind": "external",
+    "name": "ArrayBuffer",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/ArrayBuffer",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~ArrayBuffer",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 77,
+    "kind": "external",
+    "name": "DataView",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/DataView",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~DataView",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 78,
+    "kind": "external",
+    "name": "JSON",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~JSON",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 79,
+    "kind": "external",
+    "name": "Promise",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Promise",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 80,
+    "kind": "external",
+    "name": "Generator",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Generator",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Generator",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 81,
+    "kind": "external",
+    "name": "GeneratorFunction",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/GeneratorFunction",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~GeneratorFunction",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 82,
+    "kind": "external",
+    "name": "Reflect",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Reflect",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Reflect",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 83,
+    "kind": "external",
+    "name": "Proxy",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Proxy",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Proxy",
+    "access": null,
+    "description": "",
+    "lineNumber": 193,
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 85,
+    "kind": "external",
+    "name": "CanvasRenderingContext2D",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D",
+    "memberof": "BuiltinExternal/WebAPIExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/WebAPIExternal.js~CanvasRenderingContext2D",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 86,
+    "kind": "external",
+    "name": "DocumentFragment",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/API/DocumentFragment",
+    "memberof": "BuiltinExternal/WebAPIExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/WebAPIExternal.js~DocumentFragment",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 87,
+    "kind": "external",
+    "name": "Element",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/API/Element",
+    "memberof": "BuiltinExternal/WebAPIExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/WebAPIExternal.js~Element",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 88,
+    "kind": "external",
+    "name": "Event",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/API/Event",
+    "memberof": "BuiltinExternal/WebAPIExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/WebAPIExternal.js~Event",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 89,
+    "kind": "external",
+    "name": "Node",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/API/Node",
+    "memberof": "BuiltinExternal/WebAPIExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/WebAPIExternal.js~Node",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 90,
+    "kind": "external",
+    "name": "NodeList",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/API/NodeList",
+    "memberof": "BuiltinExternal/WebAPIExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/WebAPIExternal.js~NodeList",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 91,
+    "kind": "external",
+    "name": "XMLHttpRequest",
+    "externalLink": "https://developer.mozilla.org/en/docs/Web/API/XMLHttpRequest",
+    "memberof": "BuiltinExternal/WebAPIExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/WebAPIExternal.js~XMLHttpRequest",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 92,
+    "kind": "external",
+    "name": "AudioContext",
+    "externalLink": "https://developer.mozilla.org/en/docs/Web/API/AudioContext",
+    "memberof": "BuiltinExternal/WebAPIExternal.js",
+    "static": true,
+    "longname": "BuiltinExternal/WebAPIExternal.js~AudioContext",
+    "access": null,
+    "description": "",
+    "lineNumber": 34,
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 93,
+    "kind": "testFile",
+    "name": "src/createByKey.spec.js",
+    "content": "import { createByKey, createGetByKey } from './'\n\ndescribe('createByKey', () => {\n  it('should work as in the example', () => {\n    const getContainsId = (state, { id }) => state.ids.indexOf(id) !== -1\n    const getContainsIdByKind = createGetByKey(({ kind }) => kind)(getContainsId)\n    const state = getContainsIdByKind(\n      { 'approved': { ids: [1, 2, 3] } },\n      { kind: 'approved', id: 2 }\n    )\n    expect(state).toBe(true)\n  })\n\n  const ACTION_TYPE = 'ACTION_TYPE'\n  const reducer = (state = null, action) => action.type === ACTION_TYPE ? action.payload\n    : state\n  describe('simple reducer', () => {\n    const mapInputToKey = input => input.filterKey\n    const byKeyReducer = createByKey(\n      action => action.hasOwnProperty('filterKey'),\n      mapInputToKey\n    )(reducer)\n    const selector = createGetByKey(mapInputToKey)()\n\n    it('should have initial global state', () => {\n      const state = byKeyReducer(undefined, {})\n      expect(state).toEqual({})\n    })\n    it('should create a simple byKey reducer', () => {\n      const state = [ {}, {\n        type: ACTION_TYPE,\n        filterKey: 4,\n        payload: 'some-payload',\n      } ].reduce(byKeyReducer, undefined)\n      expect(selector(state, { filterKey: 4 })).toBe('some-payload')\n    })\n  })\n})\n",
+    "static": true,
+    "longname": "src/createByKey.spec.js",
+    "access": null,
+    "description": null,
+    "lineNumber": 1
+  },
+  {
+    "__docId__": 94,
+    "kind": "testDescribe",
+    "name": "describe0",
+    "testId": 0,
+    "memberof": "src/createByKey.spec.js",
+    "testDepth": 0,
+    "static": true,
+    "longname": "src/createByKey.spec.js~describe0",
+    "access": null,
+    "description": "createByKey",
+    "lineNumber": 3
+  },
+  {
+    "__docId__": 95,
+    "kind": "testIt",
+    "name": "it1",
+    "testId": 1,
+    "memberof": "src/createByKey.spec.js~describe0",
+    "testDepth": 1,
+    "static": true,
+    "longname": "src/createByKey.spec.js~describe0.it1",
+    "access": null,
+    "description": "should work as in the example",
+    "lineNumber": 4
+  },
+  {
+    "__docId__": 96,
+    "kind": "testDescribe",
+    "name": "describe2",
+    "testId": 2,
+    "memberof": "src/createByKey.spec.js~describe0",
+    "testDepth": 1,
+    "static": true,
+    "longname": "src/createByKey.spec.js~describe0.describe2",
+    "access": null,
+    "description": "simple reducer",
+    "lineNumber": 17
+  },
+  {
+    "__docId__": 97,
+    "kind": "testIt",
+    "name": "it3",
+    "testId": 3,
+    "memberof": "src/createByKey.spec.js~describe0.describe2",
+    "testDepth": 2,
+    "static": true,
+    "longname": "src/createByKey.spec.js~describe0.describe2.it3",
+    "access": null,
+    "description": "should have initial global state",
+    "lineNumber": 25
+  },
+  {
+    "__docId__": 98,
+    "kind": "testIt",
+    "name": "it4",
+    "testId": 4,
+    "memberof": "src/createByKey.spec.js~describe0.describe2",
+    "testDepth": 2,
+    "static": true,
+    "longname": "src/createByKey.spec.js~describe0.describe2.it4",
+    "access": null,
+    "description": "should create a simple byKey reducer",
+    "lineNumber": 29
+  },
+  {
+    "__docId__": 99,
+    "kind": "testFile",
+    "name": "src/createReducersByKey.spec.js",
+    "content": "import { createReducersByKey, createGetByKey } from './'\n\ndescribe('Higher order reducers for filters', () => {\n  describe('example', () => {\n    const reducer = (state = null, action) => action.type === 'SUCCESS' ? action.payload : state\n    const enhanceReducers = createReducersByKey(\n      action => action.hasOwnProperty('filterName'),\n      action => action.filterName\n    )\n    const byFilterNameReducer = enhanceReducers({\n      FILTER_ONE: reducer,\n      FILTER_TWO: reducer,\n    })\n\n    const state = byFilterNameReducer({\n      FILTER_ONE: { username: 'mrXform' },\n      FILTER_TWO: { username: 'otherUser' },\n    }, {\n      type: 'SUCCESS',\n      filterName: 'FILTER_ONE',\n      payload: { username: 'nextUserName' },\n    })\n    expect(state).toEqual({\n     FILTER_ONE: { username: 'nextUserName' },\n     FILTER_TWO: { username: 'otherUser' },\n    })\n  })\n  describe('simple reducer', () => {\n    const reducer = (state = null, action) => action.type === 'FETCH_FILTER_SUCCESS' ? action.payload\n      : state\n    describe('createReducersByFilterName', () => {\n\n      const mapActionToKey = action => action.filterName\n      const filterPredicate = filterReducers => action => action.hasOwnProperty('filterName')\n      const getByFilter = createGetByKey(({ filterName }) => filterName)(state => state)\n\n      it('should have initial state', () => {\n        const filterReducers = { FILTER_ONE: reducer }\n        const createReducersByFilterName = createReducersByKey(\n          filterPredicate(filterReducers),\n          mapActionToKey\n        )\n        const filtereReducer = createReducersByFilterName(filterReducers)\n\n        const state = [ {} ].reduce(filtereReducer, undefined)\n        expect(getByFilter(state, { filterName: 'FILTER_ONE' })).toBe(null)\n      })\n      it('should handle a single filter', () => {\n        const FILTER_ONE = 'FILTER_ONE'\n        const filterReducers = { [FILTER_ONE]: reducer }\n        const createReducersByFilterName = createReducersByKey(\n          filterPredicate(filterReducers),\n          mapActionToKey\n        )\n        const filterReducer = createReducersByFilterName(filterReducers)\n\n        const state = [ {}, {\n          type: 'FETCH_FILTER_SUCCESS',\n          filterName: FILTER_ONE,\n          payload: 'some-payload',\n        } ].reduce(filterReducer, undefined)\n        expect(getByFilter(state, { filterName: FILTER_ONE })).toBe('some-payload')\n      })\n\n      const fetchSuccess = (filterName, payload) => ({\n        type: 'FETCH_FILTER_SUCCESS',\n        filterName,\n        payload,\n      })\n      it('should handle two filters and initial state', () => {\n        const FILTER_ONE = 'FILTER_ONE'\n        const FILTER_TWO = 'FILTER_TWO'\n        const filterReducers = {\n          [FILTER_ONE]: reducer,\n          [FILTER_TWO]: reducer,\n        }\n        const createReducersByFilterName = createReducersByKey(\n          filterPredicate(filterReducers),\n          mapActionToKey\n        )\n        const filterReducer = createReducersByFilterName(filterReducers)\n\n        const state = [ {},\n          fetchSuccess(FILTER_ONE, 'some-payload'),\n        ].reduce(filterReducer, undefined)\n\n        expect(getByFilter(state, { filterName: FILTER_ONE })).toBe('some-payload')\n        expect(getByFilter(state, { filterName: FILTER_TWO })).toBe(null)\n      })\n    })\n    describe('different mapActionToKey', () => {\n      it('should handle a different different mapActionToKey', () => {\n        const FILTER_ONE = 'FILTER_ONE'\n        const filterReducers = { [FILTER_ONE]: reducer }\n\n        const mapActionToKey = action => action.sliceName\n        const filterPredicate = filterReducers => action => action.hasOwnProperty('sliceName')\n\n        const getByFilter = createGetByKey(({ sliceName }) => sliceName)(state => state)\n\n        const createReducersByFilterName = createReducersByKey(\n          filterPredicate(filterReducers),\n          mapActionToKey\n        )\n        const filterReducer = createReducersByFilterName(filterReducers)\n\n        const state = [ {}, {\n          type: 'FETCH_FILTER_SUCCESS',\n          sliceName: FILTER_ONE,\n          payload: 'some-payload',\n        } ].reduce(filterReducer, undefined)\n        expect(getByFilter(state, { sliceName: FILTER_ONE })).toBe('some-payload')\n      })\n    })\n  })\n})\n",
+    "static": true,
+    "longname": "src/createReducersByKey.spec.js",
+    "access": null,
+    "description": null,
+    "lineNumber": 1
+  },
+  {
+    "__docId__": 100,
+    "kind": "testDescribe",
+    "name": "describe5",
+    "testId": 5,
+    "memberof": "src/createReducersByKey.spec.js",
+    "testDepth": 0,
+    "static": true,
+    "longname": "src/createReducersByKey.spec.js~describe5",
+    "access": null,
+    "description": "Higher order reducers for filters",
+    "lineNumber": 3
+  },
+  {
+    "__docId__": 101,
+    "kind": "testDescribe",
+    "name": "describe6",
+    "testId": 6,
+    "memberof": "src/createReducersByKey.spec.js~describe5",
+    "testDepth": 1,
+    "static": true,
+    "longname": "src/createReducersByKey.spec.js~describe5.describe6",
+    "access": null,
+    "description": "example",
+    "lineNumber": 4
+  },
+  {
+    "__docId__": 102,
+    "kind": "testDescribe",
+    "name": "describe7",
+    "testId": 7,
+    "memberof": "src/createReducersByKey.spec.js~describe5",
+    "testDepth": 1,
+    "static": true,
+    "longname": "src/createReducersByKey.spec.js~describe5.describe7",
+    "access": null,
+    "description": "simple reducer",
+    "lineNumber": 28
+  },
+  {
+    "__docId__": 103,
+    "kind": "testDescribe",
+    "name": "describe8",
+    "testId": 8,
+    "memberof": "src/createReducersByKey.spec.js~describe5.describe7",
+    "testDepth": 2,
+    "static": true,
+    "longname": "src/createReducersByKey.spec.js~describe5.describe7.describe8",
+    "access": null,
+    "description": "createReducersByFilterName",
+    "lineNumber": 31
+  },
+  {
+    "__docId__": 104,
+    "kind": "testIt",
+    "name": "it9",
+    "testId": 9,
+    "memberof": "src/createReducersByKey.spec.js~describe5.describe7.describe8",
+    "testDepth": 3,
+    "static": true,
+    "longname": "src/createReducersByKey.spec.js~describe5.describe7.describe8.it9",
+    "access": null,
+    "description": "should have initial state",
+    "lineNumber": 37
+  },
+  {
+    "__docId__": 105,
+    "kind": "testIt",
+    "name": "it10",
+    "testId": 10,
+    "memberof": "src/createReducersByKey.spec.js~describe5.describe7.describe8",
+    "testDepth": 3,
+    "static": true,
+    "longname": "src/createReducersByKey.spec.js~describe5.describe7.describe8.it10",
+    "access": null,
+    "description": "should handle a single filter",
+    "lineNumber": 48
+  },
+  {
+    "__docId__": 106,
+    "kind": "testIt",
+    "name": "it11",
+    "testId": 11,
+    "memberof": "src/createReducersByKey.spec.js~describe5.describe7.describe8",
+    "testDepth": 3,
+    "static": true,
+    "longname": "src/createReducersByKey.spec.js~describe5.describe7.describe8.it11",
+    "access": null,
+    "description": "should handle two filters and initial state",
+    "lineNumber": 70
+  },
+  {
+    "__docId__": 107,
+    "kind": "testDescribe",
+    "name": "describe12",
+    "testId": 12,
+    "memberof": "src/createReducersByKey.spec.js~describe5.describe7",
+    "testDepth": 2,
+    "static": true,
+    "longname": "src/createReducersByKey.spec.js~describe5.describe7.describe12",
+    "access": null,
+    "description": "different mapActionToKey",
+    "lineNumber": 91
+  },
+  {
+    "__docId__": 108,
+    "kind": "testIt",
+    "name": "it13",
+    "testId": 13,
+    "memberof": "src/createReducersByKey.spec.js~describe5.describe7.describe12",
+    "testDepth": 3,
+    "static": true,
+    "longname": "src/createReducersByKey.spec.js~describe5.describe7.describe12.it13",
+    "access": null,
+    "description": "should handle a different different mapActionToKey",
+    "lineNumber": 92
+  },
+  {
+    "__docId__": 109,
+    "kind": "testFile",
+    "name": "src/expandReducerToKeys.spec.js",
+    "content": "import { combineReducers, compose } from 'redux'\n\nimport { expandReducerToKeys } from './'\n\ndescribe('expandReducerToKeys', () => {\n  describe('example', () => {\n    it('should expand a reducer to two keys', () => {\n      const reducer = (state = null, action) => action.type === 'SUCCESS' ? action.payload : state\n      const reducerKeys = [ 'a', 'b' ]\n      const reducers = expandReducerToKeys(reducerKeys)(reducer)\n\n      const stateA = [ {}, {\n        type: 'SUCCESS',\n        payload: 'some-payload',\n      } ].reduce(reducers.a, undefined)\n      expect(stateA).toBe('some-payload')\n\n      const stateB = reducers.b(undefined, {})\n      expect(stateB).toBe(null)\n    })\n  })\n  describe('simple reducer', () => {\n    it('should work with combineReducers', () => {\n      const reducer = (state = null, action) => action.type === 'SUCCESS' ? action.payload : state\n      const reducerKeys = [ 'a', 'b' ]\n      const reducers = compose(\n        combineReducers,\n        expandReducerToKeys(reducerKeys)\n      )(reducer)\n\n      const state = [ {}, {\n        type: 'SUCCESS',\n        payload: 'some-payload',\n      } ].reduce(reducers, undefined)\n      expect(state).toEqual({\n        a: 'some-payload',\n        b: 'some-payload',\n      })\n    })\n  })\n})\n",
+    "static": true,
+    "longname": "src/expandReducerToKeys.spec.js",
+    "access": null,
+    "description": null,
+    "lineNumber": 1
+  },
+  {
+    "__docId__": 110,
+    "kind": "testDescribe",
+    "name": "describe14",
+    "testId": 14,
+    "memberof": "src/expandReducerToKeys.spec.js",
+    "testDepth": 0,
+    "static": true,
+    "longname": "src/expandReducerToKeys.spec.js~describe14",
+    "access": null,
+    "description": "expandReducerToKeys",
+    "lineNumber": 5
+  },
+  {
+    "__docId__": 111,
+    "kind": "testDescribe",
+    "name": "describe15",
+    "testId": 15,
+    "memberof": "src/expandReducerToKeys.spec.js~describe14",
+    "testDepth": 1,
+    "static": true,
+    "longname": "src/expandReducerToKeys.spec.js~describe14.describe15",
+    "access": null,
+    "description": "example",
+    "lineNumber": 6
+  },
+  {
+    "__docId__": 112,
+    "kind": "testIt",
+    "name": "it16",
+    "testId": 16,
+    "memberof": "src/expandReducerToKeys.spec.js~describe14.describe15",
+    "testDepth": 2,
+    "static": true,
+    "longname": "src/expandReducerToKeys.spec.js~describe14.describe15.it16",
+    "access": null,
+    "description": "should expand a reducer to two keys",
+    "lineNumber": 7
+  },
+  {
+    "__docId__": 113,
+    "kind": "testDescribe",
+    "name": "describe17",
+    "testId": 17,
+    "memberof": "src/expandReducerToKeys.spec.js~describe14",
+    "testDepth": 1,
+    "static": true,
+    "longname": "src/expandReducerToKeys.spec.js~describe14.describe17",
+    "access": null,
+    "description": "simple reducer",
+    "lineNumber": 22
+  },
+  {
+    "__docId__": 114,
+    "kind": "testIt",
+    "name": "it18",
+    "testId": 18,
+    "memberof": "src/expandReducerToKeys.spec.js~describe14.describe17",
+    "testDepth": 2,
+    "static": true,
+    "longname": "src/expandReducerToKeys.spec.js~describe14.describe17.it18",
+    "access": null,
+    "description": "should work with combineReducers",
+    "lineNumber": 23
+  },
+  {
+    "__docId__": 115,
+    "kind": "testFile",
+    "name": "src/isolateSlice.spec.js",
+    "content": "import { isolateSlice } from './'\n\ndescribe('isolateSlice', () => {\n  it('should work as in the example', () => {\n    const reducer = jest.fn();\n    const toIdSlice = isolateSlice(action => action.id)(reducer)\n    toIdSlice(\n      { 2: { username: 'xForman' } },\n      { id: 2 }\n    )\n    expect(reducer.mock.calls.length).toBe(1)\n    expect(reducer.mock.calls[0].length).toBe(2)\n    expect(reducer.mock.calls[0][0]).toEqual({ username: 'xForman' })\n    expect(reducer.mock.calls[0][1]).toEqual({ id: 2 })\n  })\n\n  describe('simple reducer', () => {\n    const ACTION_TYPE = 'ACTION_TYPE'\n    const reducer = (state = {}, action) => {\n      if (action.type === ACTION_TYPE) {\n        return { ...state, nested: action.payload }\n      }\n      return state\n    }\n\n    it('should skip actions where predicate returns false', () => {\n\n      const mapActionToSlice = action => action.sliceName\n      const xform = isolateSlice(mapActionToSlice)\n      const isolatedReducer = xform(reducer)\n\n      const initialState = {\n        sliced: { otherThing: 'something-else' },\n        otherSlice: {},\n      }\n      const state = [\n        { type: ACTION_TYPE, payload: 'thing', sliceName: 'sliced' },\n      ].reduce(isolatedReducer, initialState)\n      expect(state).toEqual({ otherThing: 'something-else', nested: 'thing' })\n    })\n\n  })\n})\n",
+    "static": true,
+    "longname": "src/isolateSlice.spec.js",
+    "access": null,
+    "description": null,
+    "lineNumber": 1
+  },
+  {
+    "__docId__": 116,
+    "kind": "testDescribe",
+    "name": "describe19",
+    "testId": 19,
+    "memberof": "src/isolateSlice.spec.js",
+    "testDepth": 0,
+    "static": true,
+    "longname": "src/isolateSlice.spec.js~describe19",
+    "access": null,
+    "description": "isolateSlice",
+    "lineNumber": 3
+  },
+  {
+    "__docId__": 117,
+    "kind": "testIt",
+    "name": "it20",
+    "testId": 20,
+    "memberof": "src/isolateSlice.spec.js~describe19",
+    "testDepth": 1,
+    "static": true,
+    "longname": "src/isolateSlice.spec.js~describe19.it20",
+    "access": null,
+    "description": "should work as in the example",
+    "lineNumber": 4
+  },
+  {
+    "__docId__": 118,
+    "kind": "testDescribe",
+    "name": "describe21",
+    "testId": 21,
+    "memberof": "src/isolateSlice.spec.js~describe19",
+    "testDepth": 1,
+    "static": true,
+    "longname": "src/isolateSlice.spec.js~describe19.describe21",
+    "access": null,
+    "description": "simple reducer",
+    "lineNumber": 17
+  },
+  {
+    "__docId__": 119,
+    "kind": "testIt",
+    "name": "it22",
+    "testId": 22,
+    "memberof": "src/isolateSlice.spec.js~describe19.describe21",
+    "testDepth": 2,
+    "static": true,
+    "longname": "src/isolateSlice.spec.js~describe19.describe21.it22",
+    "access": null,
+    "description": "should skip actions where predicate returns false",
+    "lineNumber": 26
+  },
+  {
+    "__docId__": 120,
+    "kind": "testFile",
+    "name": "src/transformReducers.spec.js",
+    "content": "import { combineReducers, compose } from 'redux'\n\nimport { transformReducers, createReducersByKey } from './'\n\ndescribe('transformReducers', () => {\n  describe('example', () => {\n    it('should handle a two filters with one enhancer', () => {\n      const reducer = (state = null, action) => action.type === 'SUCCESS' ? action.payload : state\n      const enhancer = reducer => (state = {}, action) => ({\n        ...state,\n        enhanced: reducer(state.enhanced, action),\n      })\n      const reducers = {\n        a: reducer,\n        b: reducer,\n      }\n      const transformedReducers = transformReducers({\n        a: enhancer,\n      })(reducers)\n\n      const stateA = [ {}, {\n        type: 'SUCCESS',\n        payload: 'some-payload',\n      } ].reduce(transformedReducers.a, undefined)\n\n      const stateB = transformedReducers.b(undefined, {})\n\n      expect(stateA.enhanced).toBe('some-payload')\n      expect(stateB).toBe(null)\n    })\n  })\n  describe('simple reducer', () => {\n    const reducer = (state = null, action) => action.type === 'SUCCESS' ? action.payload : state\n    it('should work with combineReducers', () => {\n      const enhancer = reducer => (state = {}, action) => ({\n        ...state,\n        enhanced: reducer(state.enhanced, action),\n      })\n      const transformedReducers = compose(\n        combineReducers,\n        transformReducers({ a: enhancer })\n      )({ a: reducer, b: reducer })\n\n      const state = [ {}, {\n        type: 'SUCCESS',\n        payload: 'some-payload',\n      } ].reduce(transformedReducers, undefined)\n\n      expect(state.a.enhanced).toBe('some-payload')\n      expect(state.b).toBe('some-payload')\n    })\n    it('should work with createReducersByKey', () => {\n      const enhanceReducersByKey = createReducersByKey(\n        action => action.hasOwnProperty('filterName'),\n        action => action.filterName\n      )\n      const enhancer = reducer => (state = {}, action) => ({\n        ...state,\n        enhanced: reducer(state.enhanced, action),\n      })\n\n      const reducers = {\n        FILTER_ONE: reducer,\n        FILTER_TWO: reducer,\n      }\n      const transformedReducer = compose(\n        enhanceReducersByKey,\n        transformReducers({ FILTER_ONE: enhancer })\n      )(reducers)\n\n      const state = transformedReducer({\n        FILTER_ONE: { enhanced: { username: 'mrXform' } },\n        FILTER_TWO: { username: 'otherUser' },\n      }, {\n        type: 'SUCCESS',\n        filterName: 'FILTER_ONE',\n        payload: { username: 'nextUserName' },\n      })\n\n      expect(state).toEqual({\n       FILTER_ONE: { enhanced: { username: 'nextUserName' } },\n       FILTER_TWO: {  username: 'otherUser' },\n      })\n    })\n  })\n})\n",
+    "static": true,
+    "longname": "src/transformReducers.spec.js",
+    "access": null,
+    "description": null,
+    "lineNumber": 1
+  },
+  {
+    "__docId__": 121,
+    "kind": "testDescribe",
+    "name": "describe23",
+    "testId": 23,
+    "memberof": "src/transformReducers.spec.js",
+    "testDepth": 0,
+    "static": true,
+    "longname": "src/transformReducers.spec.js~describe23",
+    "access": null,
+    "description": "transformReducers",
+    "lineNumber": 5
+  },
+  {
+    "__docId__": 122,
+    "kind": "testDescribe",
+    "name": "describe24",
+    "testId": 24,
+    "memberof": "src/transformReducers.spec.js~describe23",
+    "testDepth": 1,
+    "static": true,
+    "longname": "src/transformReducers.spec.js~describe23.describe24",
+    "access": null,
+    "description": "example",
+    "lineNumber": 6
+  },
+  {
+    "__docId__": 123,
+    "kind": "testIt",
+    "name": "it25",
+    "testId": 25,
+    "memberof": "src/transformReducers.spec.js~describe23.describe24",
+    "testDepth": 2,
+    "static": true,
+    "longname": "src/transformReducers.spec.js~describe23.describe24.it25",
+    "access": null,
+    "description": "should handle a two filters with one enhancer",
+    "lineNumber": 7
+  },
+  {
+    "__docId__": 124,
+    "kind": "testDescribe",
+    "name": "describe26",
+    "testId": 26,
+    "memberof": "src/transformReducers.spec.js~describe23",
+    "testDepth": 1,
+    "static": true,
+    "longname": "src/transformReducers.spec.js~describe23.describe26",
+    "access": null,
+    "description": "simple reducer",
+    "lineNumber": 32
+  },
+  {
+    "__docId__": 125,
+    "kind": "testIt",
+    "name": "it27",
+    "testId": 27,
+    "memberof": "src/transformReducers.spec.js~describe23.describe26",
+    "testDepth": 2,
+    "static": true,
+    "longname": "src/transformReducers.spec.js~describe23.describe26.it27",
+    "access": null,
+    "description": "should work with combineReducers",
+    "lineNumber": 34
+  },
+  {
+    "__docId__": 126,
+    "kind": "testIt",
+    "name": "it28",
+    "testId": 28,
+    "memberof": "src/transformReducers.spec.js~describe23.describe26",
+    "testDepth": 2,
+    "static": true,
+    "longname": "src/transformReducers.spec.js~describe23.describe26.it28",
+    "access": null,
+    "description": "should work with createReducersByKey",
+    "lineNumber": 52
+  },
+  {
+    "__docId__": 127,
+    "kind": "testFile",
+    "name": "src/updateSlice.spec.js",
+    "content": "import { updateSlice } from './'\n\ndescribe('updateSlice', () => {\n  it('should work as in the example', () => {\n    const reducer = jest.fn();\n    reducer.mockReturnValueOnce({ username: 'new-username' })\n    const reduceSlice = updateSlice(action => action.id)(reducer)\n    // returns {\n    //   2: reducer({ username: 'xForman' }, action),\n    // }\n    const state = reduceSlice(\n      { 2: { username: 'xForman' }, 3: { username: 'yUser' } },\n      { id: 2 }\n    )\n    expect(state).toEqual({\n      2: { username: 'new-username' },\n      3: { username: 'yUser' },\n    })\n    expect(reducer.mock.calls.length).toBe(1)\n    expect(reducer.mock.calls[0].length).toBe(2)\n    expect(reducer.mock.calls[0][0]).toEqual({\n      2: { username: 'xForman' },\n      3: { username: 'yUser' },\n    })\n    expect(reducer.mock.calls[0][1]).toEqual({ id: 2 })\n  })\n\n\n  describe('simple reducer', () => {\n    const ACTION_TYPE = 'ACTION_TYPE'\n\n    it('should update the slice with key from action', () => {\n      const mapActionToSlice = action => action.sliceName\n\n      const reducer = (state = {}, action) => {\n        if(action.type === ACTION_TYPE) {\n          return action.payload\n        }\n        return state[mapActionToSlice(action)]\n      }\n\n      const xform = updateSlice(mapActionToSlice)\n      const sliceReducer = xform(reducer)\n\n      const state = [\n        { type: ACTION_TYPE, payload: 'shiny thing', sliceName: 'sliced' },\n      ].reduce(sliceReducer, {})\n      expect(state).toEqual({ sliced: 'shiny thing' })\n    })\n\n  })\n})\n",
+    "static": true,
+    "longname": "src/updateSlice.spec.js",
+    "access": null,
+    "description": null,
+    "lineNumber": 1
+  },
+  {
+    "__docId__": 128,
+    "kind": "testDescribe",
+    "name": "describe29",
+    "testId": 29,
+    "memberof": "src/updateSlice.spec.js",
+    "testDepth": 0,
+    "static": true,
+    "longname": "src/updateSlice.spec.js~describe29",
+    "access": null,
+    "description": "updateSlice",
+    "lineNumber": 3
+  },
+  {
+    "__docId__": 129,
+    "kind": "testIt",
+    "name": "it30",
+    "testId": 30,
+    "memberof": "src/updateSlice.spec.js~describe29",
+    "testDepth": 1,
+    "static": true,
+    "longname": "src/updateSlice.spec.js~describe29.it30",
+    "access": null,
+    "description": "should work as in the example",
+    "lineNumber": 4
+  },
+  {
+    "__docId__": 130,
+    "kind": "testDescribe",
+    "name": "describe31",
+    "testId": 31,
+    "memberof": "src/updateSlice.spec.js~describe29",
+    "testDepth": 1,
+    "static": true,
+    "longname": "src/updateSlice.spec.js~describe29.describe31",
+    "access": null,
+    "description": "simple reducer",
+    "lineNumber": 29
+  },
+  {
+    "__docId__": 131,
+    "kind": "testIt",
+    "name": "it32",
+    "testId": 32,
+    "memberof": "src/updateSlice.spec.js~describe29.describe31",
+    "testDepth": 2,
+    "static": true,
+    "longname": "src/updateSlice.spec.js~describe29.describe31.it32",
+    "access": null,
+    "description": "should update the slice with key from action",
+    "lineNumber": 32
+  },
+  {
+    "__docId__": 132,
+    "kind": "testFile",
+    "name": "src/withFilter.spec.js",
+    "content": "import  { withFilter } from './'\n\ndescribe('withFilter', () => {\n\n  it('should work as in the example', () => {\n    const reducer = jest.fn();\n    reducer.mockReturnValueOnce('some-next-state')\n    const onlyEvenIds = withFilter(action => action.id % 2 === 0)(reducer)\n\n   // returns reducer('some-state', { id: 2 })\n    expect(onlyEvenIds('some-state', { id: 2 })).toBe('some-next-state')\n    expect(onlyEvenIds('some-initial-state', { id: 3 })).toBe('some-initial-state')\n\n    expect(reducer.mock.calls.length).toBe(1)\n    expect(reducer.mock.calls[0].length).toBe(2)\n    expect(reducer.mock.calls[0][0]).toEqual('some-state', { id: 2 })\n  })\n\n  describe('simple reducer', () => {\n    const ACTION_TYPE = 'ACTION_TYPE'\n    const reducer = (state = null, action) => action.type === ACTION_TYPE ? action.payload\n      : state\n\n    describe('match payload', () => {\n      const xform = withFilter(action => action.payload === 'shiny thing')\n      const onlyShinyReducer = xform(reducer)\n\n      it('should return initial state', () => {\n        const state = onlyShinyReducer(undefined, {})\n        expect(state).toBe(null)\n      })\n      it('should skip actions where predicate returns false', () => {\n        const state = [\n          {},\n          { type: ACTION_TYPE, payload: 'shiny thing' },\n          { type: ACTION_TYPE, payload: 'useless thing' },\n        ].reduce(onlyShinyReducer, undefined)\n        expect(state).toBe('shiny thing')\n      })\n\n    })\n  })\n})\n",
+    "static": true,
+    "longname": "src/withFilter.spec.js",
+    "access": null,
+    "description": null,
+    "lineNumber": 1
+  },
+  {
+    "__docId__": 133,
+    "kind": "testDescribe",
+    "name": "describe33",
+    "testId": 33,
+    "memberof": "src/withFilter.spec.js",
+    "testDepth": 0,
+    "static": true,
+    "longname": "src/withFilter.spec.js~describe33",
+    "access": null,
+    "description": "withFilter",
+    "lineNumber": 3
+  },
+  {
+    "__docId__": 134,
+    "kind": "testIt",
+    "name": "it34",
+    "testId": 34,
+    "memberof": "src/withFilter.spec.js~describe33",
+    "testDepth": 1,
+    "static": true,
+    "longname": "src/withFilter.spec.js~describe33.it34",
+    "access": null,
+    "description": "should work as in the example",
+    "lineNumber": 5
+  },
+  {
+    "__docId__": 135,
+    "kind": "testDescribe",
+    "name": "describe35",
+    "testId": 35,
+    "memberof": "src/withFilter.spec.js~describe33",
+    "testDepth": 1,
+    "static": true,
+    "longname": "src/withFilter.spec.js~describe33.describe35",
+    "access": null,
+    "description": "simple reducer",
+    "lineNumber": 19
+  },
+  {
+    "__docId__": 136,
+    "kind": "testDescribe",
+    "name": "describe36",
+    "testId": 36,
+    "memberof": "src/withFilter.spec.js~describe33.describe35",
+    "testDepth": 2,
+    "static": true,
+    "longname": "src/withFilter.spec.js~describe33.describe35.describe36",
+    "access": null,
+    "description": "match payload",
+    "lineNumber": 24
+  },
+  {
+    "__docId__": 137,
+    "kind": "testIt",
+    "name": "it37",
+    "testId": 37,
+    "memberof": "src/withFilter.spec.js~describe33.describe35.describe36",
+    "testDepth": 3,
+    "static": true,
+    "longname": "src/withFilter.spec.js~describe33.describe35.describe36.it37",
+    "access": null,
+    "description": "should return initial state",
+    "lineNumber": 28
+  },
+  {
+    "__docId__": 138,
+    "kind": "testIt",
+    "name": "it38",
+    "testId": 38,
+    "memberof": "src/withFilter.spec.js~describe33.describe35.describe36",
+    "testDepth": 3,
+    "static": true,
+    "longname": "src/withFilter.spec.js~describe33.describe35.describe36.it38",
+    "access": null,
+    "description": "should skip actions where predicate returns false",
+    "lineNumber": 32
+  },
+  {
+    "__docId__": 139,
+    "kind": "testFile",
+    "name": "src/withInitialState.spec.js",
+    "content": "import { withInitialState } from './'\n\ndescribe('withInitialState', () => {\n  it('should work as in the example', () => {\n    const reducer = jest.fn();\n    reducer.mockReturnValueOnce('some-next-state')\n   const initializedReducer = withInitialState('some-state')(reducer)\n\n    // returns reducer('some-state', { id: 2 })\n    expect(initializedReducer(undefined, { id: 2 })).toBe('some-next-state')\n\n    expect(reducer.mock.calls.length).toBe(1)\n    expect(reducer.mock.calls[0].length).toBe(2)\n    expect(reducer.mock.calls[0][0]).toEqual('some-state', { id: 2 })\n  })\n\n  describe('simple reducer', () => {\n    const ACTION_TYPE = 'ACTION_TYPE'\n    const reducer = (state, action) => action.type === ACTION_TYPE ? action.payload\n      : state\n    const xform = withInitialState({ something: 'some-thing' })\n    const reducerWithInitialState = xform(reducer)\n\n    it('should inject initial state', () => {\n      const state = reducerWithInitialState(undefined, {})\n      expect(state).toEqual({ something: 'some-thing' })\n    })\n    it('should update state when reducer returns new state', () => {\n      const state = [ {}, {\n        type: ACTION_TYPE,\n        payload: 'some-payload',\n      }].reduce(reducerWithInitialState, undefined)\n      expect(state).toBe('some-payload')\n    })\n  })\n})\n",
+    "static": true,
+    "longname": "src/withInitialState.spec.js",
+    "access": null,
+    "description": null,
+    "lineNumber": 1
+  },
+  {
+    "__docId__": 140,
+    "kind": "testDescribe",
+    "name": "describe39",
+    "testId": 39,
+    "memberof": "src/withInitialState.spec.js",
+    "testDepth": 0,
+    "static": true,
+    "longname": "src/withInitialState.spec.js~describe39",
+    "access": null,
+    "description": "withInitialState",
+    "lineNumber": 3
+  },
+  {
+    "__docId__": 141,
+    "kind": "testIt",
+    "name": "it40",
+    "testId": 40,
+    "memberof": "src/withInitialState.spec.js~describe39",
+    "testDepth": 1,
+    "static": true,
+    "longname": "src/withInitialState.spec.js~describe39.it40",
+    "access": null,
+    "description": "should work as in the example",
+    "lineNumber": 4
+  },
+  {
+    "__docId__": 142,
+    "kind": "testDescribe",
+    "name": "describe41",
+    "testId": 41,
+    "memberof": "src/withInitialState.spec.js~describe39",
+    "testDepth": 1,
+    "static": true,
+    "longname": "src/withInitialState.spec.js~describe39.describe41",
+    "access": null,
+    "description": "simple reducer",
+    "lineNumber": 17
+  },
+  {
+    "__docId__": 143,
+    "kind": "testIt",
+    "name": "it42",
+    "testId": 42,
+    "memberof": "src/withInitialState.spec.js~describe39.describe41",
+    "testDepth": 2,
+    "static": true,
+    "longname": "src/withInitialState.spec.js~describe39.describe41.it42",
+    "access": null,
+    "description": "should inject initial state",
+    "lineNumber": 24
+  },
+  {
+    "__docId__": 144,
+    "kind": "testIt",
+    "name": "it43",
+    "testId": 43,
+    "memberof": "src/withInitialState.spec.js~describe39.describe41",
+    "testDepth": 2,
+    "static": true,
+    "longname": "src/withInitialState.spec.js~describe39.describe41.it43",
+    "access": null,
+    "description": "should update state when reducer returns new state",
+    "lineNumber": 28
+  },
+  {
+    "__docId__": 145,
+    "kind": "testFile",
+    "name": "src/withOldStateIfEqual.spec.js",
+    "content": "import { withOldStateIfEqual } from './'\n\ndescribe('withOldStateIfEqual', () => {\n\n  it('should work as in the example', () => {\n    const reducer = jest.fn();\n    reducer.mockReturnValueOnce('SomeState')\n\n    const caseInsensitiveReducer = withOldStateIfEqual(\n      (state, nextState) => state.toLowerCase() === nextState.toLowerCase()\n    )(reducer)\n\n    // returns 'someState' if reducer returns 'SomeState'\n    expect(caseInsensitiveReducer('someState', { payload: 'SomeState' })).toBe('someState')\n\n    expect(reducer.mock.calls.length).toBe(1)\n    expect(reducer.mock.calls[0].length).toBe(2)\n    expect(reducer.mock.calls[0][0]).toEqual('someState', { payload: 'SomeState' })\n  })\n\n  describe('simple reducer', () => {\n    const ACTION_TYPE = 'ACTION_TYPE'\n    const reducer = (state = { payload: null }, action) => action.type === ACTION_TYPE ? { ...state, payload: action.payload }\n      : state\n\n    describe('compare payloads', () => {\n      const xform = withOldStateIfEqual((state, nextState) => nextState.payload === nextState.payload)\n      const optimizedReducer = xform(reducer)\n\n      it('should return initial state', () => {\n        const state = optimizedReducer(undefined, {})\n        expect(state).toEqual({ payload: null })\n      })\n      it('should use the old state when comparison returns true', () => {\n        const prevState = [\n          {},\n          { type: ACTION_TYPE, payload: 'shiny thing' },\n        ].reduce(optimizedReducer, undefined)\n        const state = optimizedReducer(prevState, { type: ACTION_TYPE, payload: 'shiny thing' })\n\n        expect(state).toBe(prevState)\n      })\n\n    })\n  })\n})\n",
+    "static": true,
+    "longname": "src/withOldStateIfEqual.spec.js",
+    "access": null,
+    "description": null,
+    "lineNumber": 1
+  },
+  {
+    "__docId__": 146,
+    "kind": "testDescribe",
+    "name": "describe44",
+    "testId": 44,
+    "memberof": "src/withOldStateIfEqual.spec.js",
+    "testDepth": 0,
+    "static": true,
+    "longname": "src/withOldStateIfEqual.spec.js~describe44",
+    "access": null,
+    "description": "withOldStateIfEqual",
+    "lineNumber": 3
+  },
+  {
+    "__docId__": 147,
+    "kind": "testIt",
+    "name": "it45",
+    "testId": 45,
+    "memberof": "src/withOldStateIfEqual.spec.js~describe44",
+    "testDepth": 1,
+    "static": true,
+    "longname": "src/withOldStateIfEqual.spec.js~describe44.it45",
+    "access": null,
+    "description": "should work as in the example",
+    "lineNumber": 5
+  },
+  {
+    "__docId__": 148,
+    "kind": "testDescribe",
+    "name": "describe46",
+    "testId": 46,
+    "memberof": "src/withOldStateIfEqual.spec.js~describe44",
+    "testDepth": 1,
+    "static": true,
+    "longname": "src/withOldStateIfEqual.spec.js~describe44.describe46",
+    "access": null,
+    "description": "simple reducer",
+    "lineNumber": 21
+  },
+  {
+    "__docId__": 149,
+    "kind": "testDescribe",
+    "name": "describe47",
+    "testId": 47,
+    "memberof": "src/withOldStateIfEqual.spec.js~describe44.describe46",
+    "testDepth": 2,
+    "static": true,
+    "longname": "src/withOldStateIfEqual.spec.js~describe44.describe46.describe47",
+    "access": null,
+    "description": "compare payloads",
+    "lineNumber": 26
+  },
+  {
+    "__docId__": 150,
+    "kind": "testIt",
+    "name": "it48",
+    "testId": 48,
+    "memberof": "src/withOldStateIfEqual.spec.js~describe44.describe46.describe47",
+    "testDepth": 3,
+    "static": true,
+    "longname": "src/withOldStateIfEqual.spec.js~describe44.describe46.describe47.it48",
+    "access": null,
+    "description": "should return initial state",
+    "lineNumber": 30
+  },
+  {
+    "__docId__": 151,
+    "kind": "testIt",
+    "name": "it49",
+    "testId": 49,
+    "memberof": "src/withOldStateIfEqual.spec.js~describe44.describe46.describe47",
+    "testDepth": 3,
+    "static": true,
+    "longname": "src/withOldStateIfEqual.spec.js~describe44.describe46.describe47.it49",
+    "access": null,
+    "description": "should use the old state when comparison returns true",
+    "lineNumber": 34
+  },
+  {
+    "__docId__": 152,
+    "kind": "testFile",
+    "name": "src/withReducer.spec.js",
+    "content": "import { withReducer } from './'\n\ndescribe('withReducer', () => {\n  it('should work as in the example', () => {\n    const reducer = jest.fn();\n    reducer.mockReturnValueOnce({ username: 'new-username' })\n\n    const toIdSlice = withReducer((state, action) => state[action.id])(reducer)\n\n    // returns reducer({ username: 'xForman' }, { id: 2 })\n    expect(toIdSlice(\n      { 2: { username: 'xForman' } },\n      { id: 2 }\n    )).toEqual({ username: 'new-username' })\n\n    expect(reducer.mock.calls.length).toBe(1)\n    expect(reducer.mock.calls[0].length).toBe(2)\n    expect(reducer.mock.calls[0][0]).toEqual({ username: 'xForman' }, { id: 2 })\n  })\n\n  describe('simple reducer', () => {\n    const ACTION_TYPE = 'ACTION_TYPE'\n    const reducer = (state = {}, action) => {\n      if (action.type === ACTION_TYPE) {\n        return { ...state, nested: action.payload }\n      }\n      return state\n    }\n\n    it('should return the slice with nested payload', () => {\n\n      const mapActionToSlice = (state, action) => state[action.sliceName]\n      const xform = withReducer(mapActionToSlice)\n      const slicedReducer = xform(reducer)\n\n      const initialState = {\n        sliced: { otherThing: 'something-else' },\n        otherSlice: {},\n      }\n      const state = [\n        { type: ACTION_TYPE, payload: 'thing', sliceName: 'sliced' },\n      ].reduce(slicedReducer, initialState)\n      expect(state).toEqual({ otherThing: 'something-else', nested: 'thing' })\n    })\n\n  })\n})\n",
+    "static": true,
+    "longname": "src/withReducer.spec.js",
+    "access": null,
+    "description": null,
+    "lineNumber": 1
+  },
+  {
+    "__docId__": 153,
+    "kind": "testDescribe",
+    "name": "describe50",
+    "testId": 50,
+    "memberof": "src/withReducer.spec.js",
+    "testDepth": 0,
+    "static": true,
+    "longname": "src/withReducer.spec.js~describe50",
+    "access": null,
+    "description": "withReducer",
+    "lineNumber": 3
+  },
+  {
+    "__docId__": 154,
+    "kind": "testIt",
+    "name": "it51",
+    "testId": 51,
+    "memberof": "src/withReducer.spec.js~describe50",
+    "testDepth": 1,
+    "static": true,
+    "longname": "src/withReducer.spec.js~describe50.it51",
+    "access": null,
+    "description": "should work as in the example",
+    "lineNumber": 4
+  },
+  {
+    "__docId__": 155,
+    "kind": "testDescribe",
+    "name": "describe52",
+    "testId": 52,
+    "memberof": "src/withReducer.spec.js~describe50",
+    "testDepth": 1,
+    "static": true,
+    "longname": "src/withReducer.spec.js~describe50.describe52",
+    "access": null,
+    "description": "simple reducer",
+    "lineNumber": 21
+  },
+  {
+    "__docId__": 156,
+    "kind": "testIt",
+    "name": "it53",
+    "testId": 53,
+    "memberof": "src/withReducer.spec.js~describe50.describe52",
+    "testDepth": 2,
+    "static": true,
+    "longname": "src/withReducer.spec.js~describe50.describe52.it53",
+    "access": null,
+    "description": "should return the slice with nested payload",
+    "lineNumber": 30
+  }
+]

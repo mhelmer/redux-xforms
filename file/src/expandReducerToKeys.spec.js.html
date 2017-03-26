@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <base data-ice="baseUrl" href="../../">
+  <title data-ice="title">src/expandReducerToKeys.spec.js | API Document</title>
+  <link type="text/css" rel="stylesheet" href="css/style.css">
+  <link type="text/css" rel="stylesheet" href="css/prettify-tomorrow.css">
+  <script src="script/prettify/prettify.js"></script>
+  
+  
+  <script src="script/manual.js"></script>
+</head>
+<body class="layout-container" data-ice="rootContainer">
+
+<header>
+  <a href="./">Home</a>
+  
+  <a href="identifiers.html">Reference</a>
+  <a href="source.html">Source</a>
+  <a href="test.html" data-ice="testLink">Test</a>
+  <a data-ice="repoURL" href="https://github.com/mhelmer/redux-xforms" class="repo-url-github">Repository</a>
+  <div class="search-box">
+  <span>
+    <img src="./image/search.png">
+    <span class="search-input-edge"></span><input class="search-input"><span class="search-input-edge"></span>
+  </span>
+    <ul class="search-result"></ul>
+  </div>
+</header>
+
+<nav class="navigation" data-ice="nav"><div>
+  <ul>
+    
+  <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-createByKey">createByKey</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-createGetByKey">createGetByKey</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-createReducersByKey">createReducersByKey</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-expandReducerToKeys">expandReducerToKeys</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-isolateSlice">isolateSlice</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-transformReducers">transformReducers</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-updateSlice">updateSlice</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-withFilter">withFilter</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-withInitialState">withInitialState</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-withOldStateIfEqual">withOldStateIfEqual</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-withReducer">withReducer</a></span></span></li>
+</ul>
+</div>
+</nav>
+
+<div class="content" data-ice="content"><h1 data-ice="title">src/expandReducerToKeys.spec.js</h1>
+<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">import { combineReducers, compose } from &apos;redux&apos;
+
+import { expandReducerToKeys } from &apos;./&apos;
+
+describe(&apos;expandReducerToKeys&apos;, () =&gt; {
+  describe(&apos;example&apos;, () =&gt; {
+    it(&apos;should expand a reducer to two keys&apos;, () =&gt; {
+      const reducer = (state = null, action) =&gt; action.type === &apos;SUCCESS&apos; ? action.payload : state
+      const reducerKeys = [ &apos;a&apos;, &apos;b&apos; ]
+      const reducers = expandReducerToKeys(reducerKeys)(reducer)
+
+      const stateA = [ {}, {
+        type: &apos;SUCCESS&apos;,
+        payload: &apos;some-payload&apos;,
+      } ].reduce(reducers.a, undefined)
+      expect(stateA).toBe(&apos;some-payload&apos;)
+
+      const stateB = reducers.b(undefined, {})
+      expect(stateB).toBe(null)
+    })
+  })
+  describe(&apos;simple reducer&apos;, () =&gt; {
+    it(&apos;should work with combineReducers&apos;, () =&gt; {
+      const reducer = (state = null, action) =&gt; action.type === &apos;SUCCESS&apos; ? action.payload : state
+      const reducerKeys = [ &apos;a&apos;, &apos;b&apos; ]
+      const reducers = compose(
+        combineReducers,
+        expandReducerToKeys(reducerKeys)
+      )(reducer)
+
+      const state = [ {}, {
+        type: &apos;SUCCESS&apos;,
+        payload: &apos;some-payload&apos;,
+      } ].reduce(reducers, undefined)
+      expect(state).toEqual({
+        a: &apos;some-payload&apos;,
+        b: &apos;some-payload&apos;,
+      })
+    })
+  })
+})
+</code></pre>
+
+</div>
+
+<footer class="footer">
+  Generated by <a href="https://esdoc.org">ESDoc<span data-ice="esdocVersion">(0.5.2)</span><img src="./image/esdoc-logo-mini-black.png"></a>
+</footer>
+
+<script src="script/search_index.js"></script>
+<script src="script/search.js"></script>
+<script src="script/pretty-print.js"></script>
+<script src="script/inherited-summary.js"></script>
+<script src="script/test-summary.js"></script>
+<script src="script/inner-link.js"></script>
+<script src="script/patch-for-local.js"></script>
+</body>
+</html>

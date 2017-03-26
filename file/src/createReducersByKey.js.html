@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <base data-ice="baseUrl" href="../../">
+  <title data-ice="title">src/createReducersByKey.js | API Document</title>
+  <link type="text/css" rel="stylesheet" href="css/style.css">
+  <link type="text/css" rel="stylesheet" href="css/prettify-tomorrow.css">
+  <script src="script/prettify/prettify.js"></script>
+  
+  
+  <script src="script/manual.js"></script>
+</head>
+<body class="layout-container" data-ice="rootContainer">
+
+<header>
+  <a href="./">Home</a>
+  
+  <a href="identifiers.html">Reference</a>
+  <a href="source.html">Source</a>
+  <a href="test.html" data-ice="testLink">Test</a>
+  <a data-ice="repoURL" href="https://github.com/mhelmer/redux-xforms" class="repo-url-github">Repository</a>
+  <div class="search-box">
+  <span>
+    <img src="./image/search.png">
+    <span class="search-input-edge"></span><input class="search-input"><span class="search-input-edge"></span>
+  </span>
+    <ul class="search-result"></ul>
+  </div>
+</header>
+
+<nav class="navigation" data-ice="nav"><div>
+  <ul>
+    
+  <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-createByKey">createByKey</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-createGetByKey">createGetByKey</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-createReducersByKey">createReducersByKey</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-expandReducerToKeys">expandReducerToKeys</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-isolateSlice">isolateSlice</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-transformReducers">transformReducers</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-updateSlice">updateSlice</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-withFilter">withFilter</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-withInitialState">withInitialState</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-withOldStateIfEqual">withOldStateIfEqual</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-withReducer">withReducer</a></span></span></li>
+</ul>
+</div>
+</nav>
+
+<div class="content" data-ice="content"><h1 data-ice="title">src/createReducersByKey.js</h1>
+<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">import { compose } from &apos;redux&apos;
+import { into, map } from &apos;transducers.js&apos;
+
+import createByKey from &apos;./createByKey&apos;
+import withInitialState from &apos;./withInitialState&apos;
+
+const initializeReducer = ([ key, reducer ]) =&gt; [ key, reducer(undefined, {}) ]
+const combineInitialStates = obj =&gt; into({}, map(initializeReducer), obj)
+
+const mapActionToReducer = mapActionToKey =&gt; reducers =&gt; (state, action) =&gt; {
+  return reducers[mapActionToKey(action)](state, action)
+}
+
+/**
+ * Transforms an object with reducers to a combined reducer with
+ * byKey-filtering.
+ *
+ * @example
+ * const enhanceReducers = createReducersByKey(
+ *   action =&gt; action.hasOwnProperty(&apos;filterName&apos;),
+ *   action =&gt; action.filterName
+ * )
+ * const byFilterNameReducer = enhanceReducers({
+ *   FILTER_ONE: reducer,
+ *   FILTER_TWO: reducer,
+ * })
+ *
+ * // returns {
+ * //   reducer({ username: &apos;mrXform&apos; }, action),
+ * //   FILTER_TWO: { username: &apos;otherUser&apos; },
+ * // }
+ * byFilterNameReducer({
+ *   FILTER_ONE: { username: &apos;mrXform&apos; },
+ *   FILTER_TWO: { username: &apos;otherUser&apos; },
+ * }, {
+ *   type: &apos;SUCCESS&apos;,
+ *   filterName: &apos;FILTER_ONE&apos;,
+ *   payload: { username: &apos;nextUserName&apos; },
+ * })
+ *
+ * @param {function(action: Object): bool} predicate The predicate to use
+ * @param {function(action: Object): string} mapActionToKey Map action to the key of the selected slice.
+ * @returns {function} A reducer transformer
+ */
+function createReducersByKey(predicate, mapActionToKey)  {
+  return reducers =&gt; {
+    const initialState = combineInitialStates(reducers)
+    const reducerPredicate = action =&gt; predicate(action) &amp;&amp; reducers.hasOwnProperty(mapActionToKey(action))
+
+    return compose(
+      withInitialState(initialState),
+      createByKey(reducerPredicate, mapActionToKey),
+      mapActionToReducer(mapActionToKey)
+    )(reducers)
+  }
+}
+
+export default createReducersByKey
+</code></pre>
+
+</div>
+
+<footer class="footer">
+  Generated by <a href="https://esdoc.org">ESDoc<span data-ice="esdocVersion">(0.5.2)</span><img src="./image/esdoc-logo-mini-black.png"></a>
+</footer>
+
+<script src="script/search_index.js"></script>
+<script src="script/search.js"></script>
+<script src="script/pretty-print.js"></script>
+<script src="script/inherited-summary.js"></script>
+<script src="script/test-summary.js"></script>
+<script src="script/inner-link.js"></script>
+<script src="script/patch-for-local.js"></script>
+</body>
+</html>

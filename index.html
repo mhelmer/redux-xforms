@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <base data-ice="baseUrl">
+  <title data-ice="title">API Document</title>
+  <link type="text/css" rel="stylesheet" href="css/style.css">
+  <link type="text/css" rel="stylesheet" href="css/prettify-tomorrow.css">
+  <script src="script/prettify/prettify.js"></script>
+  
+  
+  <script src="script/manual.js"></script>
+</head>
+<body class="layout-container" data-ice="rootContainer">
+
+<header>
+  <a href="./">Home</a>
+  
+  <a href="identifiers.html">Reference</a>
+  <a href="source.html">Source</a>
+  <a href="test.html" data-ice="testLink">Test</a>
+  <a data-ice="repoURL" href="https://github.com/mhelmer/redux-xforms" class="repo-url-github">Repository</a>
+  <div class="search-box">
+  <span>
+    <img src="./image/search.png">
+    <span class="search-input-edge"></span><input class="search-input"><span class="search-input-edge"></span>
+  </span>
+    <ul class="search-result"></ul>
+  </div>
+</header>
+
+<nav class="navigation" data-ice="nav"><div>
+  <ul>
+    
+  <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-createByKey">createByKey</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-createGetByKey">createGetByKey</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-createReducersByKey">createReducersByKey</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-expandReducerToKeys">expandReducerToKeys</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-isolateSlice">isolateSlice</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-transformReducers">transformReducers</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-updateSlice">updateSlice</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-withFilter">withFilter</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-withInitialState">withInitialState</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-withOldStateIfEqual">withOldStateIfEqual</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-withReducer">withReducer</a></span></span></li>
+</ul>
+</div>
+</nav>
+
+<div class="content" data-ice="content"><div data-ice="index" class="github-markdown"><h1 id="redux-xforms">redux-xforms</h1>
+<p><a href="https://travis-ci.org/mhelmer/redux-xforms"><img src="https://travis-ci.org/mhelmer/redux-xforms.svg?branch=master" alt="Build Status"></a></p>
+<p><code>redux-xforms</code> is a collection of reducer transformers (higher-order reducers). They can be used to define reducers by direct composition of simpler transformers.</p>
+<p>Reducer transformers are similar to <code>transducers</code>, but lacks the completion step. It&apos;s a special case of higher-order reducers, functions that transform a reducer to another reducer:</p>
+<pre><code><code class="source-code prettyprint">xform: reducer -&gt; reducer
+reducer: state, input -&gt; state</code>
+</code></pre><p>See <a href="/docs/README.md">full documentation</a></p>
+<h2 id="story">Story</h2>
+<p>As wrote <a href="https://medium.com/@mange_vibration/reducer-composition-with-higher-order-reducers-35c3977ed08f">this article</a> on the topic &quot;Reducer composition with Higher-Order Reducers&quot;, it struck me that these Higher-Order Reducers could be decomposed into much simpler transformations. So, I started putting together a colletion, and here it is <code>redux-xforms</code>!</p>
+<h2 id="installation">Installation</h2>
+<pre><code class="lang-bash"><code class="source-code prettyprint">npm install --save redux-xforms</code>
+</code></pre>
+<h2 id="example-usage">Example usage</h2>
+<p>Setting up a <code>byFilterName</code> transformer:</p>
+<pre><code class="lang-js"><code class="source-code prettyprint">import { createByKey, createGetByKey } from &apos;redux-xforms&apos;
+
+const hasFilterName = action =&gt; action.hasOwnProperty(&apos;filterName&apos;)
+const mapActionToFilterName = action =&gt; action.filterName
+
+// we can call this later with a reducer to get the transform
+const createByFilter = createByKey(hasFilterName, mapActionToFilterName)
+
+const createGetByFilter = createGetByKey(mapActionToFilterName)</code>
+</code></pre>
+<p>When <code>createByFilter</code> is called with a reducer, the transformers will be applied one by one, from right to left.
+When calling the transformed reducer with an action, it will come in from the left.</p>
+<pre><code class="lang-js"><code class="source-code prettyprint">const ACTION_TYPE = &apos;ACTION_TYPE&apos;
+const reducer = (state = { nested: null }, action) =&gt; {
+  if (action.type === ACTION_TYPE) {
+    return { nested: action.payload }
+  }
+  return state
+}
+
+const transformedReducer = createByFilter(reducer)
+const getNestedState = createGetByFilter(state =&gt; state.nested)
+
+// reducing actions:
+const state = [ {}, {
+  type: ACTION_TYPE,
+  payload: &apos;some-payload&apos;,
+  filterName: &apos;myFilterName&apos;,
+} ].reduce(transformedReducer, undefined)
+
+console.log(state)
+// { myFilterName: { nested: &apos;some-payload&apos; } }
+
+console.log(getNestedState(state, { filterName: &apos;myFilterName&apos; }))
+// &apos;some-payload&apos;</code>
+</code></pre>
+<p><code>createByKey</code> is simply a composition of other reducer transformers.</p>
+<pre><code class="lang-js"><code class="source-code prettyprint">import { withInitialState, withFilter, updateSlice, isolateSlice } from &apos;redux-xforms&apos;
+import { compose } from &apos;redux&apos;
+
+const createByFilter = (predicate, mapActionToKey) =&gt; compose(
+  withInitialState({}), // inject initial state as {}
+  withFilter(predicate), // let through if action has filterName
+  updateSlice(mapActionToKey), // update a single key in the state
+  isolateSlice(mapActionToKey) // run the reducer on a single state slice
+)
+
+// we can transform (state, input -&gt; state) selectors as well
+const createGetByFilter = mapActionToFilterName =&gt; isolateSlice(mapActionToFilterName)</code>
+</code></pre>
+</div>
+</div>
+
+<footer class="footer">
+  Generated by <a href="https://esdoc.org">ESDoc<span data-ice="esdocVersion">(0.5.2)</span><img src="./image/esdoc-logo-mini-black.png"></a>
+</footer>
+
+<script src="script/search_index.js"></script>
+<script src="script/search.js"></script>
+<script src="script/pretty-print.js"></script>
+<script src="script/inherited-summary.js"></script>
+<script src="script/test-summary.js"></script>
+<script src="script/inner-link.js"></script>
+<script src="script/patch-for-local.js"></script>
+</body>
+</html>
