@@ -1,9 +1,11 @@
-import withFilter from './withFilter'
+import isolateSlice from './isolateSlice'
 import updateSlice from './updateSlice'
+import withFilter from './withFilter'
 import withInitialState from './withInitialState'
 
 export {
-  withFilter,
+  isolateSlice,
   updateSlice,
+  withFilter,
   withInitialState,
 }

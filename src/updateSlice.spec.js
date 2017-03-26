@@ -4,7 +4,7 @@ describe('updateSlice', () => {
   describe('simple reducer', () => {
     const ACTION_TYPE = 'ACTION_TYPE'
 
-    it('should skip actions where predicate returns false', () => {
+    it('should update the slice with key from action', () => {
       const mapActionToSlice = action => action.sliceName
 
       const reducer = (state = {}, action) => {
