@@ -9,7 +9,7 @@ describe('withInitialState', () => {
     const reducerWithInitialState = xform(reducer)
 
     it('should inject initial state', () => {
-      const state = [ {} ].reduce(reducerWithInitialState, undefined)
+      const state = reducerWithInitialState(undefined, {})
       expect(state).toEqual({ something: 'some-thing' })
     })
     it('should update state when reducer returns new state', () => {
