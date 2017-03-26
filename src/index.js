@@ -1,9 +1,9 @@
-import filtering from './filtering'
-import updateSlice from './filtering'
+import withFilter from './withFilter'
+import updateSlice from './updateSlice'
 import withInitialState from './withInitialState'
 
 export {
-  filtering,
+  withFilter,
   updateSlice,
   withInitialState,
 }

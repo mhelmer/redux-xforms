@@ -20,7 +20,7 @@ npm install --save redux-xforms
 Setting up a `byFilterName` transformer:
 
 ```js
-import { withInitialState, filtering, comparingStateObjects, updateSlice, isolateSlice } from 'redux-xforms'
+import { withInitialState, withFilter, comparingStateObjects, updateSlice, isolateSlice } from 'redux-xforms'
 import { compose } from 'redux'
 
 
@@ -29,7 +29,7 @@ const mapActionToFilterName = action => action.filterName
 
 const createByFilter = compose(
   withInitialState({}), // inject initial state as {}
-  filtering(hasFilterName), // let through if action has filterName
+  withFilter(hasFilterName), // let through if action has filterName
   comparingStateObjects, // return previous state if new state is shallow equal
   updateSlice(mapActionToFilterName), // update a single key in the state with the result of the next reducer
   isolateSlice(mapActionToFilterName) // run the reducer on a single state slice

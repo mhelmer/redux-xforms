@@ -1,13 +1,13 @@
-import filtering from './filtering'
+import withFilter from './withFilter'
 
-describe('filtering', () => {
+describe('withFilter', () => {
   describe('simple reducer', () => {
     const ACTION_TYPE = 'ACTION_TYPE'
     const reducer = (state = null, action) => action.type === ACTION_TYPE ? action.payload
       : state
 
     describe('match payload', () => {
-      const xform = filtering(action => action.payload === 'shiny thing')
+      const xform = withFilter(action => action.payload === 'shiny thing')
       const onlyShinyReducer = xform(reducer)
 
       it('should return initial state', () => {

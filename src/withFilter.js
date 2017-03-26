@@ -5,7 +5,7 @@
  * @param {function(action: Object): bool} predicate The predicate to use
  * @returns {function} A reducer transformer
  */
-function filtering(predicate) {
+function withFilter(predicate) {
   return reducer => (state, action) => {
     const isInitializationCall = state === undefined
     const shouldRunReducer = predicate(action) || isInitializationCall
@@ -13,4 +13,4 @@ function filtering(predicate) {
   }
 }
 
-export default filtering
+export default withFilter
