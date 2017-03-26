@@ -20,7 +20,7 @@ npm install --save redux-xforms
 Setting up a `byFilterName` transformer:
 
 ```js
-import { withInitialState, withFilter, withCompareStateObjects, updateKey, isolateKey } from 'redux-xforms'
+import { withInitialState, filtering, comparingStateObjects, updateSlice, isolateSlice } from 'redux-xforms'
 import { compose } from 'redux'
 
 
@@ -29,14 +29,14 @@ const mapActionToFilterName = action => action.filterName
 
 const createByFilter = compose(
   withInitialState({}), // inject initial state as {}
-  withFilter(hasFilterName), // let through if action has filterName
-  withCompareStateObjects, // return previous state if new state is shallow equal
-  updateKey(mapActionToFilterName), // update a single key in the state with the result of the next reducer
-  isolateKey(mapActionToFilterName) // run the reducer on a single state slice
+  filtering(hasFilterName), // let through if action has filterName
+  comparingStateObjects, // return previous state if new state is shallow equal
+  updateSlice(mapActionToFilterName), // update a single key in the state with the result of the next reducer
+  isolateSlice(mapActionToFilterName) // run the reducer on a single state slice
 ) // we can call this with a reducer to get the transform
 
  // we can transform (state, input -> state) selectors as well
-const withGetByFilter = isolateKey(mapActionToFilterName)
+const withGetByFilter = isolateSlice(mapActionToFilterName)
 ```
 When `createByFilter` is called with a reducer, the transformers will be applied one by one, from right to left.
 When calling the transformed reducer with an action, it will come in from the left.
