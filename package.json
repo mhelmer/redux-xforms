@@ -4,7 +4,8 @@
   "description": "Composable reducer transformations for redux",
   "main": "lib/index.js",
   "scripts": {
-    "build": "babel src -d lib",
+    "docs": "esdoc",
+    "build": "babel src -d lib --ignore \"**/*.spec.js\"",
     "build:watch": "npm run build -- --watch",
     "lint": "eslint --color --ext .js src test examples build",
     "lint:watch": "esw --color --watch --ext .js app test examples build",
@@ -36,6 +37,7 @@
     "babel-plugin-transform-es2015-modules-commonjs": "^6.24.0",
     "babel-plugin-transform-object-rest-spread": "^6.23.0",
     "babel-preset-es2015": "^6.24.0",
+    "esdoc": "^0.5.2",
     "eslint": "^3.18.0",
     "eslint-config-react-app": "^0.6.2",
     "eslint-plugin-flowtype": "^2.30.4",

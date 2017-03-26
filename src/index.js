@@ -1,1 +1,5 @@
-console.log('redux-xforms')
+import withInitialState from './withInitialState'
+
+export {
+  withInitialState,
+}
