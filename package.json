@@ -46,5 +46,8 @@
     "eslint-plugin-react": "^6.10.3",
     "eslint-watch": "^3.0.1",
     "jest": "^19.0.2"
+  },
+  "dependencies": {
+    "redux": "^3.6.0"
   }
 }
