@@ -37,6 +37,13 @@ const createByFilter = compose(
  // we can transform (state, input -> state) selectors as well
 const withGetByFilter = isolateSlice(mapActionToFilterName)
 ```
+
+We can achieve the same thing as isolateSlice, using withReducer:
+
+```javascript
+const sliceReducer = (state, action) => state[mapActionToFilterName(action.filterName)]
+withReducer(sliceReducer)
+```
 When `createByFilter` is called with a reducer, the transformers will be applied one by one, from right to left.
 When calling the transformed reducer with an action, it will come in from the left.
 
