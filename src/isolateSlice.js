@@ -1,3 +1,4 @@
+import withReducer from './withReducer'
 /**
  * Creates a reducer transformer that calls the reducer with only a slice of
  * the state, based on the action.
@@ -10,9 +11,7 @@
  */
 
 function isolateSlice(mapActionToSlice) {
-  return reducer => (state, action) => {
-    return reducer(state[mapActionToSlice(action)], action)
-  }
+  return withReducer((state, action) => state[mapActionToSlice(action)])
 }
 
 export default isolateSlice
