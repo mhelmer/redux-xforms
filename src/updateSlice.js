@@ -8,9 +8,11 @@
  *
  * @example
  * const reduceSlice = updateSlice(action => action.id)(reducer)
- * // returns reducer({ username: 'xForman' }, action)
+ * // returns {
+ * //   2: reducer({ username: 'xForman' }, action),
+ * // }
  * reduceSlice(
- *   { 2: { username: 'xForman' } },
+ *   { 2: { username: 'xForman' }, 3: { username: 'yUser' } },
  *   { id: 2 }
  * )
  *

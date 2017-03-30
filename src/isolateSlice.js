@@ -8,7 +8,7 @@ import withReducer from './withReducer'
  *
  * @example
  * const toIdSlice = isolateSlice(action => action.id)(reducer)
- * // returns { username: 'xForman' }
+ * // returns reducer({ username: 'xForman' }, { id: 2 })
  * toIdSlice(
  *   { 2: { username: 'xForman' } },
  *   { id: 2 }

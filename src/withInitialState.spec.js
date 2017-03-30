@@ -1,6 +1,19 @@
 import withInitialState from './withInitialState'
 
 describe('withInitialState', () => {
+  it('should work as in the example', () => {
+    const reducer = jest.fn();
+    reducer.mockReturnValueOnce('some-next-state')
+   const initializedReducer = withInitialState('some-state')(reducer)
+
+    // returns reducer('some-state', { id: 2 })
+    expect(initializedReducer(undefined, { id: 2 })).toBe('some-next-state')
+
+    expect(reducer.mock.calls.length).toBe(1)
+    expect(reducer.mock.calls[0].length).toBe(2)
+    expect(reducer.mock.calls[0][0]).toEqual('some-state', { id: 2 })
+  })
+
   describe('simple reducer', () => {
     const ACTION_TYPE = 'ACTION_TYPE'
     const reducer = (state, action) => action.type === ACTION_TYPE ? action.payload

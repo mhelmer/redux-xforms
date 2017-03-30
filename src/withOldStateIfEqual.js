@@ -5,7 +5,7 @@
  *
  * @example
  * const caseInsensitiveReducer = withOldStateIfEqual(
- * (state, nextState) => state.toLowerCase() === nextState.toLowerCase()
+ *   (state, nextState) => state.toLowerCase() === nextState.toLowerCase()
  * )(reducer)
  *
  * // returns 'someState' if reducer returns 'SomeState'

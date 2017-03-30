@@ -1,6 +1,16 @@
 import createByKey, { createGetByKey } from './createByKey'
 
 describe('createByKey', () => {
+  it('should work as in the example', () => {
+    const getContainsId = (state, { id }) => state.ids.indexOf(id) !== -1
+    const getContainsIdByKind = createGetByKey(({ kind }) => kind)(getContainsId)
+    const state = getContainsIdByKind(
+      { 'approved': { ids: [1, 2, 3] } },
+      { kind: 'approved', id: 2 }
+    )
+    expect(state).toBe(true)
+  })
+
   const ACTION_TYPE = 'ACTION_TYPE'
   const reducer = (state = null, action) => action.type === ACTION_TYPE ? action.payload
     : state

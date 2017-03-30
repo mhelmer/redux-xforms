@@ -1,6 +1,31 @@
 import updateSlice from './updateSlice'
 
 describe('updateSlice', () => {
+  it('should work as in the example', () => {
+    const reducer = jest.fn();
+    reducer.mockReturnValueOnce({ username: 'new-username' })
+    const reduceSlice = updateSlice(action => action.id)(reducer)
+    // returns {
+    //   2: reducer({ username: 'xForman' }, action),
+    // }
+    const state = reduceSlice(
+      { 2: { username: 'xForman' }, 3: { username: 'yUser' } },
+      { id: 2 }
+    )
+    expect(state).toEqual({
+      2: { username: 'new-username' },
+      3: { username: 'yUser' },
+    })
+    expect(reducer.mock.calls.length).toBe(1)
+    expect(reducer.mock.calls[0].length).toBe(2)
+    expect(reducer.mock.calls[0][0]).toEqual({
+      2: { username: 'xForman' },
+      3: { username: 'yUser' },
+    })
+    expect(reducer.mock.calls[0][1]).toEqual({ id: 2 })
+  })
+
+
   describe('simple reducer', () => {
     const ACTION_TYPE = 'ACTION_TYPE'
 

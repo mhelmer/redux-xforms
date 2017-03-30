@@ -4,7 +4,7 @@
  *
  * @example
  * const toIdSlice = withReducer((state, action) => state[action.id])(reducer)
- * // returns { username: 'xForman' }
+ * // returns reducer({ username: 'xForman' }, { id: 2 })
  * toIdSlice(
  *   { 2: { username: 'xForman' } },
  *   { id: 2 }
