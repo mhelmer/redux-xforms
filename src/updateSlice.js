@@ -6,6 +6,14 @@
  * Make sure to put a filtering xform in front of this, so actions that can't
  * be mapped wil not run. It also expects state to be initialized as an Object.
  *
+ * @example
+ * const reduceSlice = updateSlice(action => action.id)(reducer)
+ * // returns reducer({ username: 'xForman' }, action)
+ * reduceSlice(
+ *   { 2: { username: 'xForman' } },
+ *   { id: 2 }
+ * )
+ *
  * @param {function(action: Object): string} mapActionToSlice Map action to the key of the updating slice.
  * @returns {function} A reducer transformer
  */

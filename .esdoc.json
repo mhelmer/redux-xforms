@@ -4,6 +4,11 @@
   "experimentalProposal": {
     "objectRestSpread": true
   },
+  "test": {
+    "type": "mocha",
+    "source": "./src",
+    "includes": [".*\\.spec\\.(js|es6)$"]
+  },
   "plugins": [
     {
       "name": "esdoc-importpath-plugin",

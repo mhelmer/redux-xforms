@@ -2,6 +2,14 @@
  * Creates a reducer transformer that applies an injected reducer before applying
  * the next reducer.
  *
+ * @example
+ * const toIdSlice = withReducer((state, action) => state[action.id])(reducer)
+ * // returns { username: 'xForman' }
+ * toIdSlice(
+ *   { 2: { username: 'xForman' } },
+ *   { id: 2 }
+ * )
+ *
  * @param {function} injectedReducer Reducer to run before the next reducer
  * @returns {function} The wrapped reducer
  */
