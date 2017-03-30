@@ -3,5 +3,16 @@
   "destination": "./doc",
   "experimentalProposal": {
     "objectRestSpread": true
-  }
+  },
+  "plugins": [
+    {
+      "name": "esdoc-importpath-plugin",
+      "option": {
+        "replaces": [ {
+          "from": "^src/",
+          "to": "lib/"
+        } ]
+      }
+    }
+  ]
 }

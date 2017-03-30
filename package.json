@@ -48,6 +48,7 @@
     "jest": "^19.0.2"
   },
   "dependencies": {
+    "esdoc-importpath-plugin": "^0.1.1",
     "redux": "^3.6.0"
   }
 }
