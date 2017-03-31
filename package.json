@@ -3,12 +3,17 @@
   "version": "0.0.0",
   "description": "Composable reducer transformations for redux",
   "main": "lib/index.js",
+  "file": [ "lib", "src" ],
   "scripts": {
     "docs": "esdoc",
     "build": "babel src -d lib --ignore \"**/*.spec.js\"",
     "build:watch": "npm run build -- --watch",
+    "clean": "rimraf lib",
     "lint": "eslint --color --ext .js src test examples build",
     "lint:watch": "esw --color --watch --ext .js app test examples build",
+	"postbuild": "npm test",
+    "posttest": "npm run lint",
+    "prepublish": "in-publish && npm run clean && npm run build || not-in-publish",
     "test": "jest --config jest.config.json",
     "test:watch": "npm test -- --watch"
   },
@@ -45,7 +50,9 @@
     "eslint-plugin-jsx-a11y": "^4.0.0",
     "eslint-plugin-react": "^6.10.3",
     "eslint-watch": "^3.0.1",
-    "jest": "^19.0.2"
+    "in-publish": "^2.0.0",
+    "jest": "^19.0.2",
+    "rimraf": "^2.6.1"
   },
   "dependencies": {
     "esdoc-importpath-plugin": "^0.1.1",
