@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "Composable reducer transformations for redux",
   "main": "lib/index.js",
-  "file": [
+  "files": [
     "lib",
     "src"
   ],
