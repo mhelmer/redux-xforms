@@ -15,7 +15,7 @@
       "option": {
         "replaces": [ {
           "from": "^src/",
-          "to": "lib/"
+          "to": ""
         } ]
       }
     }

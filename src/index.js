@@ -1,4 +1,5 @@
 import createByKey from './createByKey'
+import createReducersByKey from './createReducersByKey'
 import isolateSlice from './isolateSlice'
 import updateSlice from './updateSlice'
 import withFilter from './withFilter'
@@ -8,6 +9,7 @@ import withReducer from './withReducer'
 
 export {
   createByKey,
+  createReducersByKey,
   isolateSlice,
   updateSlice,
   withFilter,
