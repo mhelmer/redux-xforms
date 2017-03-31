@@ -4,6 +4,7 @@ import updateSlice from './updateSlice'
 import withFilter from './withFilter'
 import withInitialState from './withInitialState'
 import withOldStateIfEqual from './withOldStateIfEqual'
+import withReducer from './withReducer'
 
 export {
   createByKey,
@@ -12,4 +13,5 @@ export {
   withFilter,
   withInitialState,
   withOldStateIfEqual,
+  withReducer,
 }
