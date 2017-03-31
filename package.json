@@ -1,9 +1,12 @@
 {
   "name": "redux-xforms",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "description": "Composable reducer transformations for redux",
   "main": "lib/index.js",
-  "file": [ "lib", "src" ],
+  "file": [
+    "lib",
+    "src"
+  ],
   "scripts": {
     "docs": "esdoc",
     "build": "babel src -d lib --ignore \"**/*.spec.js\"",
@@ -11,7 +14,7 @@
     "clean": "rimraf lib",
     "lint": "eslint --color --ext .js src test examples build",
     "lint:watch": "esw --color --watch --ext .js app test examples build",
-	"postbuild": "npm test",
+    "postbuild": "npm test",
     "posttest": "npm run lint",
     "prepublish": "in-publish && npm run clean && npm run build || not-in-publish",
     "test": "jest --config jest.config.json",
