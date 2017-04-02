@@ -1,4 +1,4 @@
-import { mapping, transduceObj} from './utils'
+import { map, into } from 'transducers.js'
 
 /**
  * Transforms an object with reducers into an object with the original
@@ -35,10 +35,14 @@ import { mapping, transduceObj} from './utils'
  */
 function transformReducers(transformers = {}) {
   return reducers => {
-    const xf = mapping(
-      reducerKey => transformers[reducerKey](reducers[reducerKey])
+    const xf = map(
+      ([ key, reducer ]) => [
+        key,
+        transformers.hasOwnProperty(key) ? transformers[key](reducer)
+          : reducer,
+      ]
     )
-    return { ...reducers, ...transduceObj(xf)(transformers) }
+    return into({}, xf, reducers)
   }
 }
 

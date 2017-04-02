@@ -59,6 +59,7 @@
   },
   "dependencies": {
     "esdoc-importpath-plugin": "^0.1.1",
-    "redux": "^3.6.0"
+    "redux": "^3.6.0",
+    "transducers.js": "^0.3.2"
   }
 }

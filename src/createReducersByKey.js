@@ -1,11 +1,11 @@
 import { compose } from 'redux'
+import { into, map } from 'transducers.js'
 
 import createByKey, { createGetByKey } from './createByKey'
 import withInitialState from './withInitialState'
-import { mapValues } from './utils'
 
-const initializeReducer = reducer => reducer(undefined, {})
-const combineInitialStates = mapValues(initializeReducer)
+const initializeReducer = ([ key, reducer ]) => [ key, reducer(undefined, {}) ]
+const combineInitialStates = obj => into({}, map(initializeReducer), obj)
 
 const mapActionToReducer = mapActionToKey => reducers => (state, action) => {
   return reducers[mapActionToKey(action)](state, action)
