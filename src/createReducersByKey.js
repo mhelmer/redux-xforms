@@ -14,17 +14,17 @@ const mapActionToReducer = mapActionToKey => reducers => (state, action) => {
 /**
  * Transforms an object with reducers to a combined reducer with byKey-filtering.
  * @example
- *  const enhanceReducers = createReducersByKey(
- *    action => action.hasOwnProperty('filterName'),
- *    action => action.filterName
- *  )
- *  const byFilterNameReducer = enhanceReducers({
- *    FILTER_ONE: reducer,
- *    FILTER_TWO: reducer,
- *  })
+ * const enhanceReducers = createReducersByKey(
+ *   action => action.hasOwnProperty('filterName'),
+ *   action => action.filterName
+ * )
+ * const byFilterNameReducer = enhanceReducers({
+ *   FILTER_ONE: reducer,
+ *   FILTER_TWO: reducer,
+ * })
  *
  * // returns {
- * //   reducer({ FILTER_ONE: { username: 'mrXform' }, action) },
+ * //   reducer({ username: 'mrXform' }, action),
  * //   FILTER_TWO: { username: 'otherUser' },
  * // }
  * byFilterNameReducer({
