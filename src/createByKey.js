@@ -52,7 +52,7 @@ const defaultSelector = state => state
  * )
  *
  * @param {function(action: Object): string} mapFilterToKey Map filter to the key of the selected slice.
- * @returns {function} A selctor transformer
+ * @returns {function} A selector transformer
  */
 export function createGetByKey(mapFilterToKey) {
   return (selector = defaultSelector) => isolateSlice(mapFilterToKey)(selector)

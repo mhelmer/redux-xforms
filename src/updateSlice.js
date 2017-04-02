@@ -1,4 +1,3 @@
-
 /**
  * Creates a reducer transformer that updates only one slice of the state based
  * on the action.

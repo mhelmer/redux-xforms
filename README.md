@@ -9,7 +9,7 @@ xform: reducer -> reducer
 reducer: state, input -> state
 ```
 
-See [full documentation](http://mhelmer.github.io/redux-xforms)
+See [full documentation](/docs/README.md)
 
 ## Installation
 
