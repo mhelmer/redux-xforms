@@ -1,3 +1,4 @@
+import { cat, into } from 'transducers.js'
 /**
  * Creates a reducer transformer that updates only one slice of the state based
  * on the action.
@@ -26,7 +27,7 @@ function updateSlice(mapActionToSlice) {
     if (state[key] === result) {
       return state
     }
-    return ({ ...state, [key]: result })
+    return into({}, cat, [ state, [ [ key, result ] ] ])
   }
 }
 

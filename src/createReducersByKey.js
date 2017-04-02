@@ -7,8 +7,9 @@ import withInitialState from './withInitialState'
 const initializeReducer = ([ key, reducer ]) => [ key, reducer(undefined, {}) ]
 const combineInitialStates = obj => into({}, map(initializeReducer), obj)
 
+const getReducerByKey = (reducers, key) => reducers[key]
 const mapActionToReducer = mapActionToKey => reducers => (state, action) => {
-  return reducers[mapActionToKey(action)](state, action)
+  return getReducerByKey(reducers, mapActionToKey(action))(state, action)
 }
 
 /**
