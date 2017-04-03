@@ -66,7 +66,7 @@ console.log(getNestedState(state, { filterName: 'myFilterName' }))
 
 `createByKey` is simply a composition of other reducer transformers.
 
-```
+```js
 import { withInitialState, withFilter, updateSlice, isolateSlice } from 'redux-xforms'
 import { compose } from 'redux'
 
