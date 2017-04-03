@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## [1.1.1] - 2017-04-03
+### Fixed
+- A bug in `createReducersByKey`
+
 ## [1.1.0] - 2017-04-03
 ### Added
 - Markdown docs in the repo
@@ -30,6 +34,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - [`withReducer`](/docs/api/withReducer.md): Creates a reducer transformer that applies an injected reducer before applying the next reducer.
 - Examples
 
-[Unreleased]: https://github.com/mhelmer/redux-xforms/compare/v1.1.0...HEAD
+[Unreleased]: https://github.com/mhelmer/redux-xforms/compare/v1.1.1...HEAD
+[1.1.1]: https://github.com/mhelmer/redux-xforms/compare/v1.1.0...v1.1.1
 [1.1.0]: https://github.com/mhelmer/redux-xforms/compare/v1.0.1...v1.1.0
 [1.0.1]: https://github.com/mhelmer/redux-xforms/compare/v1.0.0...v1.0.1
