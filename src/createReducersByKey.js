@@ -44,7 +44,7 @@ const mapActionToReducer = mapActionToKey => reducers => (state, action) => {
 function createReducersByKey(predicate, mapActionToKey)  {
   return reducers => {
     const initialState = combineInitialStates(reducers)
-    const reducerPredicate = action => predicate(action) && reducers.hasOwnProperty(action.filterName)
+    const reducerPredicate = action => predicate(action) && reducers.hasOwnProperty(mapActionToKey(action))
 
     return compose(
       withInitialState(initialState),

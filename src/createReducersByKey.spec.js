@@ -88,5 +88,29 @@ describe('Higher order reducers for filters', () => {
         expect(getByFilter(state, { filterName: FILTER_TWO })).toBe(null)
       })
     })
+    describe('different mapActionToKey', () => {
+      it('should handle a different different mapActionToKey', () => {
+        const FILTER_ONE = 'FILTER_ONE'
+        const filterReducers = { [FILTER_ONE]: reducer }
+
+        const mapActionToKey = action => action.sliceName
+        const filterPredicate = filterReducers => action => action.hasOwnProperty('sliceName')
+
+        const getByFilter = createGetReducerByKey(({ sliceName }) => sliceName)(state => state)
+
+        const createReducersByFilterName = createReducersByKey(
+          filterPredicate(filterReducers),
+          mapActionToKey
+        )
+        const filterReducer = createReducersByFilterName(filterReducers)
+
+        const state = [ {}, {
+          type: 'FETCH_FILTER_SUCCESS',
+          sliceName: FILTER_ONE,
+          payload: 'some-payload',
+        } ].reduce(filterReducer, undefined)
+        expect(getByFilter(state, { sliceName: FILTER_ONE })).toBe('some-payload')
+      })
+    })
   })
 })
