@@ -7,6 +7,7 @@ import withInitialState from './withInitialState'
 
 /**
  * Creates a reducer transformer that adds byKey-filtering.
+ *
  * @example
  * const byKeyReducer = createByKey(
  *   action => action.hasOwnProperty('userId'),

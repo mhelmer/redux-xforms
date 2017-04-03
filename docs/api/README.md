@@ -3,6 +3,7 @@
 ## Top level exports
 
 * [createByKey](/docs/api/createByKey.md)
+* [createGetByKey](/docs/api/createByKey.md)
 * [createReducersByKey](/docs/api/createReducersByKey.md)
 * [isolateSlice](/docs/api/isolateSlice.md)
 * [transformReducers](/docs/api/transformReducers.md)
