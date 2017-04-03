@@ -1,5 +1,7 @@
 # redux-xforms
 
+[![Build Status](https://travis-ci.org/mhelmer/redux-xforms.svg?branch=master)](https://travis-ci.org/mhelmer/redux-xforms)
+
 `redux-xforms` is a collection of reducer transformers (higher-order reducers). They can be used to define reducers by direct composition of simpler transformers.
 
 Reducer transformers are similar to `transducers`, but lacks the completion step. It's a special case of higher-order reducers, functions that transform a reducer to another reducer:
