@@ -1,4 +1,7 @@
 import withReducer from './withReducer'
+
+const getByObjKey = (obj, key) => obj[key]
+
 /**
  * Creates a reducer transformer that calls the reducer with only a slice of
  * the state, based on the action.
@@ -15,11 +18,11 @@ import withReducer from './withReducer'
  * )
  *
  * @param {function(action: Object): string} mapActionToSlice Map action to the key of the updating slice.
+ * @param {function} getByKey Optional selector to get an entity in the state
  * @returns {function} A reducer transformer
  */
-
-function isolateSlice(mapActionToSlice) {
-  return withReducer((state, action) => state[mapActionToSlice(action)])
+function isolateSlice(mapActionToSlice, getByKey = getByObjKey) {
+  return withReducer((state, action) => getByKey(state, mapActionToSlice(action)))
 }
 
 export default isolateSlice

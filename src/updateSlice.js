@@ -1,4 +1,8 @@
 import { cat, into } from 'transducers.js'
+
+const initialize = () => ({})
+const getByObjKey = (obj, key) => obj[key]
+
 /**
  * Creates a reducer transformer that updates only one slice of the state based
  * on the action.
@@ -17,17 +21,19 @@ import { cat, into } from 'transducers.js'
  * )
  *
  * @param {function(action: Object): string} mapActionToSlice Map action to the key of the updating slice.
+ * @param {function} init Optional initializer for the state. Use this for eg ImmutableJS
+ * @param {function} getByKey Optional selector to get an entity in the state
  * @returns {function} A reducer transformer
  */
-function updateSlice(mapActionToSlice) {
+function updateSlice(mapActionToSlice, init = initialize, getByKey = getByObjKey) {
   return reducer => (state, action) => {
     const result = reducer(state, action)
     const key = mapActionToSlice(action)
 
-    if (state[key] === result) {
+    if (getByKey(state, key) === result) {
       return state
     }
-    return into({}, cat, [ state, [ [ key, result ] ] ])
+    return into(init(), cat, [ state, [ [ key, result ] ] ])
   }
 }
 

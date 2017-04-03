@@ -5,6 +5,9 @@ import updateSlice from './updateSlice'
 import withFilter from './withFilter'
 import withInitialState from './withInitialState'
 
+const initialize = () => ({})
+const getByObjKey = (obj, key) => obj[key]
+
 /**
  * Creates a reducer transformer that adds byKey-filtering.
  *
@@ -25,14 +28,16 @@ import withInitialState from './withInitialState'
  *
  * @param {function(action: Object): bool} predicate The predicate to use
  * @param {function(action: Object): string} mapActionToKey Map action to the key of the selected slice.
+ * @param {function} init Optional initializer for the state. Use this for eg ImmutableJS
+ * @param {function} getByKey Optional selector to get an entity in the state
  * @returns {function} A reducer transformer
  */
-function createByKey(predicate, mapActionToKey) {
+function createByKey(predicate, mapActionToKey, init = initialize, getByKey = getByObjKey) {
   return compose(
-    withInitialState({}),
+    withInitialState(init()),
     withFilter(predicate),
-    updateSlice(mapActionToKey),
-    isolateSlice(mapActionToKey)
+    updateSlice(mapActionToKey, init, getByKey),
+    isolateSlice(mapActionToKey, getByKey)
   )
 }
 
@@ -53,8 +58,9 @@ const defaultSelector = state => state
  * )
  *
  * @param {function(action: Object): string} mapFilterToKey Map filter to the key of the selected slice.
+ * @param {function} getByKey Optional selector to get an entity in the state
  * @returns {function} A selector transformer
  */
-export function createGetByKey(mapFilterToKey) {
-  return (selector = defaultSelector) => isolateSlice(mapFilterToKey)(selector)
+export function createGetByKey(mapFilterToKey, getByKey = getByObjKey) {
+  return (selector = defaultSelector) => isolateSlice(mapFilterToKey, getByKey)(selector)
 }

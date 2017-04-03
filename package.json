@@ -53,6 +53,7 @@
     "eslint-plugin-jsx-a11y": "^4.0.0",
     "eslint-plugin-react": "^6.10.3",
     "eslint-watch": "^3.0.1",
+    "immutable": "^3.8.1",
     "in-publish": "^2.0.0",
     "jest": "^19.0.2",
     "rimraf": "^2.6.1"
