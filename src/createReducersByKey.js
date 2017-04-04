@@ -12,7 +12,8 @@ const mapActionToReducer = mapActionToKey => reducers => (state, action) => {
 }
 
 /**
- * Transforms an object with reducers to a combined reducer with byKey-filtering.
+ * Transforms an object with reducers to a combined reducer with
+ * byKey-filtering.
  *
  * @example
  * const enhanceReducers = createReducersByKey(

@@ -37,4 +37,4 @@ byFilterNameReducer({
   filterName: 'FILTER_ONE',
   payload: { username: 'nextUserName' },
 })
- ```
+```

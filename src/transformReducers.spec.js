@@ -1,4 +1,7 @@
+import { combineReducers, compose } from 'redux'
+
 import transformReducers from './transformReducers'
+import createReducersByKey from './createReducersByKey'
 
 describe('transformReducers', () => {
   describe('example', () => {
@@ -25,6 +28,60 @@ describe('transformReducers', () => {
 
       expect(stateA.enhanced).toBe('some-payload')
       expect(stateB).toBe(null)
+    })
+  })
+  describe('simple reducer', () => {
+    const reducer = (state = null, action) => action.type === 'SUCCESS' ? action.payload : state
+    it('should work with combineReducers', () => {
+      const enhancer = reducer => (state = {}, action) => ({
+        ...state,
+        enhanced: reducer(state.enhanced, action),
+      })
+      const transformedReducers = compose(
+        combineReducers,
+        transformReducers({ a: enhancer })
+      )({ a: reducer, b: reducer })
+
+      const state = [ {}, {
+        type: 'SUCCESS',
+        payload: 'some-payload',
+      } ].reduce(transformedReducers, undefined)
+
+      expect(state.a.enhanced).toBe('some-payload')
+      expect(state.b).toBe('some-payload')
+    })
+    it('should work with createReducersByKey', () => {
+      const enhanceReducersByKey = createReducersByKey(
+        action => action.hasOwnProperty('filterName'),
+        action => action.filterName
+      )
+      const enhancer = reducer => (state = {}, action) => ({
+        ...state,
+        enhanced: reducer(state.enhanced, action),
+      })
+
+      const reducers = {
+        FILTER_ONE: reducer,
+        FILTER_TWO: reducer,
+      }
+      const transformedReducer = compose(
+        enhanceReducersByKey,
+        transformReducers({ FILTER_ONE: enhancer })
+      )(reducers)
+
+      const state = transformedReducer({
+        FILTER_ONE: { enhanced: { username: 'mrXform' } },
+        FILTER_TWO: { username: 'otherUser' },
+      }, {
+        type: 'SUCCESS',
+        filterName: 'FILTER_ONE',
+        payload: { username: 'nextUserName' },
+      })
+
+      expect(state).toEqual({
+       FILTER_ONE: { enhanced: { username: 'nextUserName' } },
+       FILTER_TWO: {  username: 'otherUser' },
+      })
     })
   })
 })
