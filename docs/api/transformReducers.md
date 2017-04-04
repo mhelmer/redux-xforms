@@ -2,7 +2,7 @@
 
 Transforms an object with reducers into an object with the original reducers
 merged with transformed reducers for matching keys. It can for example be
-composed with combineReducers or createReducersByKey.
+composed with `combineReducers` or `createReducersByKey`.
 
 #### Arguments
 

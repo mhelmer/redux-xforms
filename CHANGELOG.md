@@ -5,6 +5,9 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+### Added
+- [`expandReducerToKeys`](/docs/api/expandReducerToKeys.md): Expands a single reducer into an object with many reducers, suitable for
+composition with `combineReducers`, `transformReducers` etc.
 
 ## [1.1.1] - 2017-04-03
 ### Fixed

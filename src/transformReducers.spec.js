@@ -11,7 +11,7 @@ describe('transformReducers', () => {
         ...state,
         enhanced: reducer(state.enhanced, action),
       })
-      const reducers =  {
+      const reducers = {
         a: reducer,
         b: reducer,
       }
