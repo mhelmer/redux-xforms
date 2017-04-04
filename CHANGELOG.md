@@ -5,6 +5,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+
+## [1.2.0] - 2017-04-05
 ### Added
 - [`expandReducerToKeys`](/docs/api/expandReducerToKeys.md): Expands a single reducer into an object with many reducers, suitable for
 composition with `combineReducers`, `transformReducers` etc.
@@ -37,7 +39,8 @@ composition with `combineReducers`, `transformReducers` etc.
 - [`withReducer`](/docs/api/withReducer.md): Creates a reducer transformer that applies an injected reducer before applying the next reducer.
 - Examples
 
-[Unreleased]: https://github.com/mhelmer/redux-xforms/compare/v1.1.1...HEAD
+[Unreleased]: https://github.com/mhelmer/redux-xforms/compare/v1.2.0...HEAD
+[1.2.0]: https://github.com/mhelmer/redux-xforms/compare/v1.1.1...v1.2.0
 [1.1.1]: https://github.com/mhelmer/redux-xforms/compare/v1.1.0...v1.1.1
 [1.1.0]: https://github.com/mhelmer/redux-xforms/compare/v1.0.1...v1.1.0
 [1.0.1]: https://github.com/mhelmer/redux-xforms/compare/v1.0.0...v1.0.1
