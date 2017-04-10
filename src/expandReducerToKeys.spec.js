@@ -1,6 +1,6 @@
 import { combineReducers, compose } from 'redux'
 
-import expandReducerToKeys from './expandReducerToKeys'
+import { expandReducerToKeys } from './'
 
 describe('expandReducerToKeys', () => {
   describe('example', () => {

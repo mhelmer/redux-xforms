@@ -1,4 +1,4 @@
-import isolateSlice from './isolateSlice'
+import { isolateSlice } from './'
 
 describe('isolateSlice', () => {
   it('should work as in the example', () => {

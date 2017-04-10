@@ -1,4 +1,4 @@
-import withReducer from './withReducer'
+import { withReducer } from './'
 
 describe('withReducer', () => {
   it('should work as in the example', () => {

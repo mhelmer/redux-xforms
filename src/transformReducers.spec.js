@@ -1,7 +1,6 @@
 import { combineReducers, compose } from 'redux'
 
-import transformReducers from './transformReducers'
-import createReducersByKey from './createReducersByKey'
+import { transformReducers, createReducersByKey } from './'
 
 describe('transformReducers', () => {
   describe('example', () => {

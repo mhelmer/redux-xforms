@@ -1,4 +1,4 @@
-import createReducersByKey, { createGetReducerByKey } from './createReducersByKey'
+import { createReducersByKey, createGetByKey } from './'
 
 describe('Higher order reducers for filters', () => {
   describe('example', () => {
@@ -32,7 +32,7 @@ describe('Higher order reducers for filters', () => {
 
       const mapActionToKey = action => action.filterName
       const filterPredicate = filterReducers => action => action.hasOwnProperty('filterName')
-      const getByFilter = createGetReducerByKey(({ filterName }) => filterName)(state => state)
+      const getByFilter = createGetByKey(({ filterName }) => filterName)(state => state)
 
       it('should have initial state', () => {
         const filterReducers = { FILTER_ONE: reducer }
@@ -96,7 +96,7 @@ describe('Higher order reducers for filters', () => {
         const mapActionToKey = action => action.sliceName
         const filterPredicate = filterReducers => action => action.hasOwnProperty('sliceName')
 
-        const getByFilter = createGetReducerByKey(({ sliceName }) => sliceName)(state => state)
+        const getByFilter = createGetByKey(({ sliceName }) => sliceName)(state => state)
 
         const createReducersByFilterName = createReducersByKey(
           filterPredicate(filterReducers),

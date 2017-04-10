@@ -1,7 +1,7 @@
 import { compose } from 'redux'
 import { into, map } from 'transducers.js'
 
-import createByKey, { createGetByKey } from './createByKey'
+import createByKey from './createByKey'
 import withInitialState from './withInitialState'
 
 const initializeReducer = ([ key, reducer ]) => [ key, reducer(undefined, {}) ]
@@ -56,5 +56,3 @@ function createReducersByKey(predicate, mapActionToKey)  {
 }
 
 export default createReducersByKey
-
-export const createGetReducerByKey = createGetByKey

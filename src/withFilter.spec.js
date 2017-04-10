@@ -1,4 +1,4 @@
-import withFilter from './withFilter'
+import  { withFilter } from './'
 
 describe('withFilter', () => {
 

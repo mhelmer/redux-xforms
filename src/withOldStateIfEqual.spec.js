@@ -1,4 +1,4 @@
-import withOldStateIfEqual from './withOldStateIfEqual'
+import { withOldStateIfEqual } from './'
 
 describe('withOldStateIfEqual', () => {
 

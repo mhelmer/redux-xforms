@@ -1,4 +1,4 @@
-import withInitialState from './withInitialState'
+import { withInitialState } from './'
 
 describe('withInitialState', () => {
   it('should work as in the example', () => {

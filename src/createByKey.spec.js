@@ -1,4 +1,4 @@
-import createByKey, { createGetByKey } from './createByKey'
+import { createByKey, createGetByKey } from './'
 
 describe('createByKey', () => {
   it('should work as in the example', () => {

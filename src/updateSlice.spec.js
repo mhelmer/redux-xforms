@@ -1,4 +1,4 @@
-import updateSlice from './updateSlice'
+import { updateSlice } from './'
 
 describe('updateSlice', () => {
   it('should work as in the example', () => {
