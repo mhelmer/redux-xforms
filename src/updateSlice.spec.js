@@ -48,5 +48,25 @@ describe('updateSlice', () => {
       expect(state).toEqual({ sliced: 'shiny thing' })
     })
 
+    it('should return the same state when updated slice is unchanged', () => {
+      const mapActionToSlice = action => action.sliceName
+
+      const reducer = (state = {}, action) => {
+        if(action.type === ACTION_TYPE) {
+          return action.payload
+        }
+        return state[mapActionToSlice(action)]
+      }
+
+      const xform = updateSlice(mapActionToSlice)
+      const sliceReducer = xform(reducer)
+
+      const initialState = { sliced: 'shiny thing' }
+      const state = [
+        { type: ACTION_TYPE, payload: 'shiny thing', sliceName: 'sliced' },
+      ].reduce(sliceReducer, initialState)
+      expect(state).toBe(initialState)
+    })
+
   })
 })

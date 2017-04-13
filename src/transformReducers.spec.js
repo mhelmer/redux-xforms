@@ -31,6 +31,18 @@ describe('transformReducers', () => {
   })
   describe('simple reducer', () => {
     const reducer = (state = null, action) => action.type === 'SUCCESS' ? action.payload : state
+    it('should handle a two filters with one enhancer', () => {
+      const reducers = { a: reducer }
+      const transformedReducers = transformReducers()(reducers)
+
+      const stateA = [ {}, {
+        type: 'SUCCESS',
+        payload: 'some-payload',
+      } ].reduce(transformedReducers.a, undefined)
+
+
+      expect(stateA).toEqual('some-payload')
+    })
     it('should work with combineReducers', () => {
       const enhancer = reducer => (state = {}, action) => ({
         ...state,
