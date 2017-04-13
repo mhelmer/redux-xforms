@@ -1,6 +1,7 @@
 {
   "verbose": true,
   "modulePathIgnorePatterns": ["<rootDir>/lib/"],
+  "coverageReporters": ["json", "lcov", "text", "cobertura"],
   "collectCoverageFrom": [
     "**/*.{js}",
     "!**/node_modules/**",
