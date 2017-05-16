@@ -3,20 +3,23 @@
   "version": "1.2.1",
   "description": "Composable reducer transformations for redux",
   "main": "lib/index.js",
+  "module": "lib/index.es.js",
   "files": [
     "lib",
     "src"
   ],
   "scripts": {
     "docs": "esdoc",
-    "build": "babel src -d lib --ignore \"**/*.spec.js\"",
-    "build:watch": "npm run build -- --watch",
+    "build": "NODE_ENV=production rollup -c",
+    "build:dev": "rollup -c",
+    "build:watch": "npm run build:dev -- -w",
     "clean": "rimraf lib",
     "lint": "eslint --color --ext .js src test examples build",
     "lint:watch": "esw --color --watch --ext .js app test examples build",
+    "prebuild": "npm run clean",
     "postbuild": "npm test",
     "posttest": "npm run lint",
-    "prepublish": "in-publish && npm run clean && npm run build || not-in-publish",
+    "prepublish": "in-publish && npm run build || not-in-publish",
     "test": "jest --config jest.config.json",
     "test:watch": "npm test -- --watch"
   },
@@ -41,6 +44,7 @@
     "babel-core": "^6.24.0",
     "babel-eslint": "^7.2.1",
     "babel-jest": "^19.0.0",
+    "babel-plugin-external-helpers": "^6.22.0",
     "babel-plugin-module-resolver": "^2.5.0",
     "babel-plugin-transform-es2015-modules-commonjs": "^6.24.0",
     "babel-plugin-transform-object-rest-spread": "^6.23.0",
@@ -56,9 +60,19 @@
     "eslint-watch": "^3.0.1",
     "in-publish": "^2.0.0",
     "jest": "^19.0.2",
-    "rimraf": "^2.6.1"
+    "rimraf": "^2.6.1",
+    "rollup": "^0.41.6",
+    "rollup-plugin-babel": "^2.7.1",
+    "rollup-plugin-commonjs": "^8.0.2",
+    "rollup-plugin-node-resolve": "^3.0.0",
+    "rollup-plugin-replace": "^1.1.1"
   },
   "dependencies": {
+    "babelrc-rollup": "^3.0.0",
+    "redux": "^3.6.0",
+    "transducers.js": "^0.3.2"
+  },
+  "peerDependencies": {
     "redux": "^3.6.0",
     "transducers.js": "^0.3.2"
   }
