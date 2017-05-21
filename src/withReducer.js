@@ -16,10 +16,7 @@
 
 function withReducer(injectedReducer) {
   return reducer => (state, action) => {
-    return reducer(
-      injectedReducer(state, action),
-      action
-    )
+    return reducer(injectedReducer(state, action), action)
   }
 }
 

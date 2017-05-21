@@ -4,7 +4,7 @@ import { into, map } from 'transducers-js'
 import createByKey from './createByKey'
 import withInitialState from './withInitialState'
 
-const initializeReducer = ([ key, reducer ]) => [ key, reducer(undefined, {}) ]
+const initializeReducer = ([key, reducer]) => [key, reducer(undefined, {})]
 const combineInitialStates = obj => into({}, map(initializeReducer), obj)
 
 const mapActionToReducer = mapActionToKey => reducers => (state, action) => {
@@ -42,10 +42,11 @@ const mapActionToReducer = mapActionToKey => reducers => (state, action) => {
  * @param {function(action: Object): string} mapActionToKey Map action to the key of the selected slice.
  * @returns {function} A reducer transformer
  */
-function createReducersByKey(predicate, mapActionToKey)  {
+function createReducersByKey(predicate, mapActionToKey) {
   return reducers => {
     const initialState = combineInitialStates(reducers)
-    const reducerPredicate = action => predicate(action) && reducers.hasOwnProperty(mapActionToKey(action))
+    const reducerPredicate = action =>
+      predicate(action) && reducers.hasOwnProperty(mapActionToKey(action))
 
     return compose(
       withInitialState(initialState),

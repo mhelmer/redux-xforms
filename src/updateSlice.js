@@ -26,7 +26,7 @@ function updateSlice(mapActionToSlice) {
     if (state[key] === result) {
       return state
     }
-    return ({ ...state, [key]: result })
+    return { ...state, [key]: result }
   }
 }
 

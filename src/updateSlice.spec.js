@@ -2,7 +2,7 @@ import { updateSlice } from './'
 
 describe('updateSlice', () => {
   it('should work as in the example', () => {
-    const reducer = jest.fn();
+    const reducer = jest.fn()
     reducer.mockReturnValueOnce({ username: 'new-username' })
     const reduceSlice = updateSlice(action => action.id)(reducer)
     // returns {
@@ -25,7 +25,6 @@ describe('updateSlice', () => {
     expect(reducer.mock.calls[0][1]).toEqual({ id: 2 })
   })
 
-
   describe('simple reducer', () => {
     const ACTION_TYPE = 'ACTION_TYPE'
 
@@ -33,7 +32,7 @@ describe('updateSlice', () => {
       const mapActionToSlice = action => action.sliceName
 
       const reducer = (state = {}, action) => {
-        if(action.type === ACTION_TYPE) {
+        if (action.type === ACTION_TYPE) {
           return action.payload
         }
         return state[mapActionToSlice(action)]
@@ -52,7 +51,7 @@ describe('updateSlice', () => {
       const mapActionToSlice = action => action.sliceName
 
       const reducer = (state = {}, action) => {
-        if(action.type === ACTION_TYPE) {
+        if (action.type === ACTION_TYPE) {
           return action.payload
         }
         return state[mapActionToSlice(action)]
@@ -67,6 +66,5 @@ describe('updateSlice', () => {
       ].reduce(sliceReducer, initialState)
       expect(state).toBe(initialState)
     })
-
   })
 })
