@@ -5,6 +5,12 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+## [1.3.0] - 2017-04-10
+### Added
+- Rollup build
+- ES6 module to dist files
+- Coverage reporters
+- New lint rules
 
 ## [1.2.1] - 2017-04-10
 ### Fixed
@@ -43,7 +49,8 @@ composition with `combineReducers`, `transformReducers` etc.
 - [`withReducer`](/docs/api/withReducer.md): Creates a reducer transformer that applies an injected reducer before applying the next reducer.
 - Examples
 
-[Unreleased]: https://github.com/mhelmer/redux-xforms/compare/v1.2.1...HEAD
+[Unreleased]: https://github.com/mhelmer/redux-xforms/compare/v1.3.0...HEAD
+[1.3.0]: https://github.com/mhelmer/redux-xforms/compare/v1.2.1...v1.3.0
 [1.2.1]: https://github.com/mhelmer/redux-xforms/compare/v1.2.0...v1.2.1
 [1.2.0]: https://github.com/mhelmer/redux-xforms/compare/v1.1.1...v1.2.0
 [1.1.1]: https://github.com/mhelmer/redux-xforms/compare/v1.1.0...v1.1.1
