@@ -1,4 +1,3 @@
-
 /**
  * Creates a reducer transformer that will compare the old and new state with
  * a custom function, and re-use the old state if it returns true.

@@ -1,4 +1,3 @@
-
 /**
  * Creates a reducer transformer that will inject initial state before calling
  * the reducing function

@@ -1,4 +1,3 @@
-
 /**
  * Creates a reducer transformer that will filter based on the action
  *
