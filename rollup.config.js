@@ -18,11 +18,7 @@ const config = {
       jsnext: true,
       main: true,
     }),
-    commonjs({
-      namedExports: {
-        'node_modules/transducers.js/transducers.js': ['into', 'map'],
-      },
-    }),
+    commonjs(),
     babel(babelrc({})),
   ],
   external: external,
