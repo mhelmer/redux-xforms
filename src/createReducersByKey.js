@@ -1,5 +1,5 @@
 import { compose } from 'redux'
-import { into, map } from 'transducers.js'
+import { into, map } from 'transducers-js'
 
 import createByKey from './createByKey'
 import withInitialState from './withInitialState'

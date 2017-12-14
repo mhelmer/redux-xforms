@@ -60,6 +60,7 @@
     "eslint-watch": "^3.0.1",
     "in-publish": "^2.0.0",
     "jest": "^19.0.2",
+    "redux": "^3.6.0",
     "rimraf": "^2.6.1",
     "rollup": "^0.41.6",
     "rollup-plugin-babel": "^2.7.1",
@@ -68,12 +69,9 @@
     "rollup-plugin-replace": "^1.1.1"
   },
   "dependencies": {
-    "babelrc-rollup": "^3.0.0",
-    "redux": "^3.6.0",
-    "transducers.js": "^0.3.2"
+    "transducers-js": "^0.4.174"
   },
   "peerDependencies": {
-    "redux": "^3.6.0",
-    "transducers.js": "^0.3.2"
+    "redux": "^3.6.0"
   }
 }

@@ -1,5 +1,4 @@
 import babel from 'rollup-plugin-babel'
-import babelrc from 'babelrc-rollup'
 import replace from 'rollup-plugin-replace'
 import commonjs from 'rollup-plugin-commonjs'
 import resolve from 'rollup-plugin-node-resolve'
@@ -9,6 +8,9 @@ let external = Object.keys(pkg.peerDependencies)
 
 const config = {
   entry: 'src/index.js',
+  globals: {
+    redux: 'redux',
+  },
   plugins: [
     replace({
       'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'development'),
@@ -19,14 +21,17 @@ const config = {
       main: true,
     }),
     commonjs(),
-    babel(babelrc({})),
+    babel({
+      exclude: 'node_modules/**',
+      plugins: ['external-helpers'],
+    }),
   ],
-  external: external,
+  external,
   targets: [
     {
       dest: pkg.main,
       format: 'umd',
-      moduleName: 'monthlyQuizDucks',
+      moduleName: 'reduxXforms',
       sourceMap: true,
     },
     {

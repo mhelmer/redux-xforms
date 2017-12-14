@@ -1,4 +1,4 @@
-import { map, into } from 'transducers.js'
+import { map, into } from 'transducers-js'
 
 /**
  * Transforms an object with reducers into an object with the original reducers

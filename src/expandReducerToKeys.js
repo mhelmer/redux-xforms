@@ -1,4 +1,4 @@
-import { map, into } from 'transducers.js'
+import { map, into } from 'transducers-js'
 
 /**
  * Expands a single reducer into an object with many reducers, suitable for
