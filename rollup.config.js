@@ -2,6 +2,8 @@ import babel from 'rollup-plugin-babel'
 import replace from 'rollup-plugin-replace'
 import commonjs from 'rollup-plugin-commonjs'
 import resolve from 'rollup-plugin-node-resolve'
+import uglify from 'rollup-plugin-uglify'
+import { minify } from 'uglify-es'
 
 let pkg = require('./package.json')
 let external = Object.keys(pkg.peerDependencies)
@@ -25,19 +27,20 @@ const config = {
       plugins: ['external-helpers'],
     }),
     commonjs(),
+    uglify({}, minify),
   ],
   external,
   output: [
     {
       file: pkg.main,
       format: 'umd',
-      moduleName: 'reduxXforms',
-      sourceMap: true,
+      name: 'reduxXforms',
+      sourcemap: true,
     },
     {
-      dest: pkg.module,
+      file: pkg.module,
       format: 'es',
-      sourceMap: true,
+      sourcemap: true,
     },
   ],
 }
