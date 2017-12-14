@@ -24,7 +24,7 @@ describe('withOldStateIfEqual', () => {
       : state
 
     describe('compare payloads', () => {
-      const xform = withOldStateIfEqual((state, nextState) => nextState.payload === nextState.payload)
+      const xform = withOldStateIfEqual((state, nextState) => state.payload === nextState.payload)
       const optimizedReducer = xform(reducer)
 
       it('should return initial state', () => {
