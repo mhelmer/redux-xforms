@@ -7,7 +7,7 @@ let pkg = require('./package.json')
 let external = Object.keys(pkg.peerDependencies)
 
 const config = {
-  entry: 'src/index.js',
+  input: 'src/index.js',
   globals: {
     redux: 'redux',
   },
@@ -20,16 +20,16 @@ const config = {
       jsnext: true,
       main: true,
     }),
-    commonjs(),
     babel({
       exclude: 'node_modules/**',
       plugins: ['external-helpers'],
     }),
+    commonjs(),
   ],
   external,
-  targets: [
+  output: [
     {
-      dest: pkg.main,
+      file: pkg.main,
       format: 'umd',
       moduleName: 'reduxXforms',
       sourceMap: true,
