@@ -22,11 +22,13 @@ const config = {
       jsnext: true,
       main: true,
     }),
+    commonjs({
+      include: ['node_modules/**'],
+    }),
     babel({
       exclude: 'node_modules/**',
       plugins: ['external-helpers'],
     }),
-    commonjs(),
     uglify({}, minify),
   ],
   external,
