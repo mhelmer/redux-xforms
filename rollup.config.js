@@ -1,12 +1,9 @@
 import babel from 'rollup-plugin-babel'
-import replace from 'rollup-plugin-replace'
 import commonjs from 'rollup-plugin-commonjs'
 import resolve from 'rollup-plugin-node-resolve'
-import uglify from 'rollup-plugin-uglify'
-import { minify } from 'uglify-es'
 
-let pkg = require('./package.json')
-let external = Object.keys(pkg.peerDependencies)
+const pkg = require('./package.json')
+const external = Object.keys(pkg.peerDependencies)
 
 const config = {
   input: 'src/index.js',
@@ -14,9 +11,6 @@ const config = {
     redux: 'redux',
   },
   plugins: [
-    replace({
-      'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'development'),
-    }),
     resolve({
       module: true,
       jsnext: true,
@@ -29,7 +23,6 @@ const config = {
       exclude: 'node_modules/**',
       plugins: ['external-helpers'],
     }),
-    uglify({}, minify),
   ],
   external,
   output: [
