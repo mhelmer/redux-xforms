@@ -1,6 +1,7 @@
 # redux-xforms
 
 [![Build Status](https://travis-ci.org/mhelmer/redux-xforms.svg?branch=master)](https://travis-ci.org/mhelmer/redux-xforms)
+[![npm version](https://badge.fury.io/js/redux-xforms.svg)](https://badge.fury.io/js/redux-xforms)
 
 `redux-xforms` is a collection of reducer transformers (higher-order reducers). They can be used to define reducers by direct composition of simpler transformers.
 
