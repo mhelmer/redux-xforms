@@ -2,9 +2,9 @@ import { withInitialState } from './'
 
 describe('withInitialState', () => {
   it('should work as in the example', () => {
-    const reducer = jest.fn();
+    const reducer = jest.fn()
     reducer.mockReturnValueOnce('some-next-state')
-   const initializedReducer = withInitialState('some-state')(reducer)
+    const initializedReducer = withInitialState('some-state')(reducer)
 
     // returns reducer('some-state', { id: 2 })
     expect(initializedReducer(undefined, { id: 2 })).toBe('some-next-state')
@@ -16,8 +16,8 @@ describe('withInitialState', () => {
 
   describe('simple reducer', () => {
     const ACTION_TYPE = 'ACTION_TYPE'
-    const reducer = (state, action) => action.type === ACTION_TYPE ? action.payload
-      : state
+    const reducer = (state, action) =>
+      action.type === ACTION_TYPE ? action.payload : state
     const xform = withInitialState({ something: 'some-thing' })
     const reducerWithInitialState = xform(reducer)
 
@@ -26,10 +26,13 @@ describe('withInitialState', () => {
       expect(state).toEqual({ something: 'some-thing' })
     })
     it('should update state when reducer returns new state', () => {
-      const state = [ {}, {
-        type: ACTION_TYPE,
-        payload: 'some-payload',
-      }].reduce(reducerWithInitialState, undefined)
+      const state = [
+        {},
+        {
+          type: ACTION_TYPE,
+          payload: 'some-payload',
+        },
+      ].reduce(reducerWithInitialState, undefined)
       expect(state).toBe('some-payload')
     })
   })

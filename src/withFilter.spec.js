@@ -1,15 +1,16 @@
-import  { withFilter } from './'
+import { withFilter } from './'
 
 describe('withFilter', () => {
-
   it('should work as in the example', () => {
-    const reducer = jest.fn();
+    const reducer = jest.fn()
     reducer.mockReturnValueOnce('some-next-state')
     const onlyEvenIds = withFilter(action => action.id % 2 === 0)(reducer)
 
-   // returns reducer('some-state', { id: 2 })
+    // returns reducer('some-state', { id: 2 })
     expect(onlyEvenIds('some-state', { id: 2 })).toBe('some-next-state')
-    expect(onlyEvenIds('some-initial-state', { id: 3 })).toBe('some-initial-state')
+    expect(onlyEvenIds('some-initial-state', { id: 3 })).toBe(
+      'some-initial-state'
+    )
 
     expect(reducer.mock.calls.length).toBe(1)
     expect(reducer.mock.calls[0].length).toBe(2)
@@ -18,8 +19,8 @@ describe('withFilter', () => {
 
   describe('simple reducer', () => {
     const ACTION_TYPE = 'ACTION_TYPE'
-    const reducer = (state = null, action) => action.type === ACTION_TYPE ? action.payload
-      : state
+    const reducer = (state = null, action) =>
+      action.type === ACTION_TYPE ? action.payload : state
 
     describe('match payload', () => {
       const xform = withFilter(action => action.payload === 'shiny thing')
@@ -37,7 +38,6 @@ describe('withFilter', () => {
         ].reduce(onlyShinyReducer, undefined)
         expect(state).toBe('shiny thing')
       })
-
     })
   })
 })

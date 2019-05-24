@@ -17,8 +17,10 @@ function withOldStateIfEqual(compareStates) {
   return reducer => (state, action) => {
     const isInitializationCall = state === undefined
     const nextState = reducer(state, action)
-    const shouldReturnOldState = !isInitializationCall &&
-      state !== nextState && compareStates(state, nextState)
+    const shouldReturnOldState =
+      !isInitializationCall &&
+      state !== nextState &&
+      compareStates(state, nextState)
 
     if (shouldReturnOldState) {
       return state

@@ -2,12 +2,9 @@ import { isolateSlice } from './'
 
 describe('isolateSlice', () => {
   it('should work as in the example', () => {
-    const reducer = jest.fn();
+    const reducer = jest.fn()
     const toIdSlice = isolateSlice(action => action.id)(reducer)
-    toIdSlice(
-      { 2: { username: 'xForman' } },
-      { id: 2 }
-    )
+    toIdSlice({ 2: { username: 'xForman' } }, { id: 2 })
     expect(reducer.mock.calls.length).toBe(1)
     expect(reducer.mock.calls[0].length).toBe(2)
     expect(reducer.mock.calls[0][0]).toEqual({ username: 'xForman' })
@@ -24,7 +21,6 @@ describe('isolateSlice', () => {
     }
 
     it('should skip actions where predicate returns false', () => {
-
       const mapActionToSlice = action => action.sliceName
       const xform = isolateSlice(mapActionToSlice)
       const isolatedReducer = xform(reducer)
@@ -38,6 +34,5 @@ describe('isolateSlice', () => {
       ].reduce(isolatedReducer, initialState)
       expect(state).toEqual({ otherThing: 'something-else', nested: 'thing' })
     })
-
   })
 })

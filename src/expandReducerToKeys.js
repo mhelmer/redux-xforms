@@ -23,7 +23,7 @@ import { map, into } from 'transducers-js'
  */
 function expandReducerToKeys(reducerKeys) {
   return reducer => {
-    const xform = map(key => [ key, reducer ])
+    const xform = map(key => [key, reducer])
     return into({}, xform, reducerKeys)
   }
 }

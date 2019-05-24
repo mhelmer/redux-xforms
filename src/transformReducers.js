@@ -36,13 +36,10 @@ import { map, into } from 'transducers-js'
  */
 function transformReducers(transformers = {}) {
   return reducers => {
-    const xf = map(
-      ([ key, reducer ]) => [
-        key,
-        transformers.hasOwnProperty(key) ? transformers[key](reducer)
-          : reducer,
-      ]
-    )
+    const xf = map(([key, reducer]) => [
+      key,
+      transformers.hasOwnProperty(key) ? transformers[key](reducer) : reducer,
+    ])
     return into({}, xf, reducers)
   }
 }

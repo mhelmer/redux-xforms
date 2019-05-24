@@ -2,16 +2,15 @@ import { withReducer } from './'
 
 describe('withReducer', () => {
   it('should work as in the example', () => {
-    const reducer = jest.fn();
+    const reducer = jest.fn()
     reducer.mockReturnValueOnce({ username: 'new-username' })
 
     const toIdSlice = withReducer((state, action) => state[action.id])(reducer)
 
     // returns reducer({ username: 'xForman' }, { id: 2 })
-    expect(toIdSlice(
-      { 2: { username: 'xForman' } },
-      { id: 2 }
-    )).toEqual({ username: 'new-username' })
+    expect(toIdSlice({ 2: { username: 'xForman' } }, { id: 2 })).toEqual({
+      username: 'new-username',
+    })
 
     expect(reducer.mock.calls.length).toBe(1)
     expect(reducer.mock.calls[0].length).toBe(2)
@@ -28,7 +27,6 @@ describe('withReducer', () => {
     }
 
     it('should return the slice with nested payload', () => {
-
       const mapActionToSlice = (state, action) => state[action.sliceName]
       const xform = withReducer(mapActionToSlice)
       const slicedReducer = xform(reducer)
@@ -42,6 +40,5 @@ describe('withReducer', () => {
       ].reduce(slicedReducer, initialState)
       expect(state).toEqual({ otherThing: 'something-else', nested: 'thing' })
     })
-
   })
 })
