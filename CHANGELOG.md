@@ -5,6 +5,32 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+## [1.5.0]
+### Changed
+- Update all dependencies
+- Added prettier
+
+## [1.4.2]
+### Removed
+- Removed minifer to leave it up to consuming packages
+
+## [1.4.1]
+### Changed
+- Reordered rollup plugins
+
+## [1.4.0]
+### Changed
+- Switched to cognitec/transducer-js implementation
+- Updated dependencies
+
+## [1.3.2]
+### Removed
+- explicit named export from rollup
+
+## [1.3.1]
+### Added
+- explicit named export for transducers.js from rollup
+
 ## [1.3.0] - 2017-04-10
 ### Added
 - Rollup build
@@ -50,6 +76,12 @@ composition with `combineReducers`, `transformReducers` etc.
 - Examples
 
 [Unreleased]: https://github.com/mhelmer/redux-xforms/compare/v1.3.0...HEAD
+[1.5.0]: https://github.com/mhelmer/redux-xforms/compare/v1.4.2...v1.5.0
+[1.4.2]: https://github.com/mhelmer/redux-xforms/compare/v1.4.1...v1.4.2
+[1.4.1]: https://github.com/mhelmer/redux-xforms/compare/v1.4.0...v1.4.1
+[1.4.0]: https://github.com/mhelmer/redux-xforms/compare/v1.3.2...v1.4.0
+[1.3.2]: https://github.com/mhelmer/redux-xforms/compare/v1.3.1...v1.3.2
+[1.3.1]: https://github.com/mhelmer/redux-xforms/compare/v1.3.0...v1.3.1
 [1.3.0]: https://github.com/mhelmer/redux-xforms/compare/v1.2.1...v1.3.0
 [1.2.1]: https://github.com/mhelmer/redux-xforms/compare/v1.2.0...v1.2.1
 [1.2.0]: https://github.com/mhelmer/redux-xforms/compare/v1.1.1...v1.2.0
