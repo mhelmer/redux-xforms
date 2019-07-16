@@ -1,14 +1,14 @@
 {
   "presets": [
-    ["es2015", { "modules": false }]
+    ["@babel/env", { "modules": false }]
   ],
   "plugins": [
-    "transform-object-rest-spread",
+    "@babel/proposal-object-rest-spread",
     ["module-resolver", { "root": ["./src"] }]
   ],
   "env": {
     "test": {
-      "plugins": ["transform-es2015-modules-commonjs"]
+      "plugins": ["@babel/transform-modules-commonjs"]
     }
   }
 }

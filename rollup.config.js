@@ -7,21 +7,19 @@ const external = Object.keys(pkg.peerDependencies)
 
 const config = {
   input: 'src/index.js',
-  globals: {
-    redux: 'redux',
+  onwarn: function(message, warn) {
+    if (/transducers-js/.test(message)) return
+    warn(message)
   },
   plugins: [
     resolve({
-      module: true,
-      jsnext: true,
-      main: true,
+      mainFields: ['module', 'main'],
     }),
     commonjs({
       include: ['node_modules/**'],
     }),
     babel({
       exclude: 'node_modules/**',
-      plugins: ['external-helpers'],
     }),
   ],
   external,
@@ -31,6 +29,9 @@ const config = {
       format: 'umd',
       name: 'reduxXforms',
       sourcemap: true,
+      globals: {
+        redux: 'redux',
+      },
     },
     {
       file: pkg.module,
