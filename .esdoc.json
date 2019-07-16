@@ -1,15 +1,13 @@
 {
   "source": "./src",
   "destination": "./doc",
-  "experimentalProposal": {
-    "objectRestSpread": true
-  },
-  "test": {
-    "type": "mocha",
-    "source": "./src",
-    "includes": [".*\\.spec\\.(js|es6)$"]
-  },
   "plugins": [
+    {
+      "name": "esdoc-ecmascript-proposal-plugin",
+      "option": {
+        "objectRestSpread": true
+      }
+    },
     {
       "name": "esdoc-importpath-plugin",
       "option": {
@@ -17,6 +15,15 @@
           "from": "^src/",
           "to": ""
         } ]
+      }
+    }, {
+      "name": "esdoc-standard-plugin",
+      "option": {
+        "test": {
+          "type": "mocha",
+          "source": "./src",
+          "includes": [".*\\.spec\\.(js|es6)$"]
+        }
       }
     }
   ]
