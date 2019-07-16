@@ -1,6 +1,6 @@
 {
   "name": "redux-xforms",
-  "version": "1.4.2",
+  "version": "1.5.0",
   "description": "Composable reducer transformations for redux",
   "main": "lib/index.js",
   "module": "lib/index.es.js",
