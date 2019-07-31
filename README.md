@@ -14,7 +14,7 @@ reducer: state, input -> state
 
 See [full documentation](/docs/README.md)
 ## Story
-As wrote [this article](https://medium.com/@mange_vibration/reducer-composition-with-higher-order-reducers-35c3977ed08f) on the topic "Reducer composition with Higher-Order Reducers", it struck me that these Higher-Order Reducers could be decomposed into much simpler transformations. So, I started putting together a colletion, and here it is `redux-xforms`!
+As I wrote [this article](https://medium.com/@mange_vibration/reducer-composition-with-higher-order-reducers-35c3977ed08f) on the topic "Reducer composition with Higher-Order Reducers", it struck me that these Higher-Order Reducers could be decomposed into much simpler transformations. So, I started putting together a colletion, and here it is `redux-xforms`!
 
 ## Installation
 
