@@ -1297,12 +1297,14 @@ browser-resolve@^1.11.3:
     resolve "1.1.7"
 
 browserslist@^4.6.0, browserslist@^4.6.2:
-  version "4.6.6"
-  resolved "https://registry.yarnpkg.com/browserslist/-/browserslist-4.6.6.tgz#6e4bf467cde520bc9dbdf3747dafa03531cec453"
+  version "4.16.6"
+  resolved "https://registry.yarnpkg.com/browserslist/-/browserslist-4.16.6.tgz#d7901277a5a88e554ed305b183ec9b0c08f66fa2"
   dependencies:
-    caniuse-lite "^1.0.30000984"
-    electron-to-chromium "^1.3.191"
-    node-releases "^1.1.25"
+    caniuse-lite "^1.0.30001219"
+    colorette "^1.2.2"
+    electron-to-chromium "^1.3.723"
+    escalade "^3.1.1"
+    node-releases "^1.1.71"
 
 bser@^2.0.0:
   version "2.1.0"
@@ -1356,9 +1358,9 @@ camelcase@^5.0.0:
   version "5.3.1"
   resolved "https://registry.yarnpkg.com/camelcase/-/camelcase-5.3.1.tgz#e3c9b31569e106811df242f715725a1f4c494320"
 
-caniuse-lite@^1.0.30000984:
-  version "1.0.30000984"
-  resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30000984.tgz#dc96c3c469e9bcfc6ad5bdd24c77ec918ea76fe0"
+caniuse-lite@^1.0.30001219:
+  version "1.0.30001228"
+  resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30001228.tgz#bfdc5942cd3326fa51ee0b42fbef4da9d492a7fa"
 
 capture-exit@^2.0.0:
   version "2.0.0"
@@ -1528,6 +1530,10 @@ color-logger@0.0.6:
 color-name@1.1.3:
   version "1.1.3"
   resolved "https://registry.yarnpkg.com/color-name/-/color-name-1.1.3.tgz#a7d0558bd89c42f795dd42328f740831ca53bc25"
+
+colorette@^1.2.2:
+  version "1.2.2"
+  resolved "https://registry.yarnpkg.com/colorette/-/colorette-1.2.2.tgz#cbcc79d5e99caea2dbf10eb3a26fd8b3e6acfa94"
 
 combined-stream@^1.0.6, combined-stream@~1.0.6:
   version "1.0.8"
@@ -1838,9 +1844,9 @@ ecc-jsbn@~0.1.1:
     jsbn "~0.1.0"
     safer-buffer "^2.1.0"
 
-electron-to-chromium@^1.3.191:
-  version "1.3.191"
-  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.3.191.tgz#c451b422cd8b2eab84dedabab5abcae1eaefb6f0"
+electron-to-chromium@^1.3.723:
+  version "1.3.738"
+  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.3.738.tgz#aec24b091c82acbfabbdcce08076a703941d17ca"
 
 elegant-spinner@^1.0.1:
   version "1.0.1"
@@ -1888,6 +1894,10 @@ es-to-primitive@^1.2.0:
     is-callable "^1.1.4"
     is-date-object "^1.0.1"
     is-symbol "^1.0.2"
+
+escalade@^3.1.1:
+  version "3.1.1"
+  resolved "https://registry.yarnpkg.com/escalade/-/escalade-3.1.1.tgz#d8cfdc7000965c5a0174b4a82eaa5c0552742e40"
 
 escape-html@1.0.3:
   version "1.0.3"
@@ -4028,11 +4038,9 @@ node-pre-gyp@^0.12.0:
     semver "^5.3.0"
     tar "^4"
 
-node-releases@^1.1.25:
-  version "1.1.25"
-  resolved "https://registry.yarnpkg.com/node-releases/-/node-releases-1.1.25.tgz#0c2d7dbc7fed30fbe02a9ee3007b8c90bf0133d3"
-  dependencies:
-    semver "^5.3.0"
+node-releases@^1.1.71:
+  version "1.1.72"
+  resolved "https://registry.yarnpkg.com/node-releases/-/node-releases-1.1.72.tgz#14802ab6b1039a79a0c7d662b610a5bbd76eacbe"
 
 nopt@^4.0.1:
   version "4.0.1"
